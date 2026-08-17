@@ -1,13 +1,29 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { siteContent } from "@/data/siteContent";
-import { ArrowUpRight, ShieldCheck, Zap, Bot, Repeat, Layers, Rocket, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight,
+  ShieldCheck,
+  Zap,
+  Bot,
+  Repeat,
+  Layers,
+  Rocket,
+  Sparkles,
+  ArrowLeftRight,
+  Users,
+  CandlestickChart,
+  CheckCircle2,
+  TrendingUp,
+} from "lucide-react";
 
 export function Ecosystem() {
+  const [activeTab, setActiveTab] = useState<"spot" | "p2p" | "swap">("spot");
+
   const getPillarIcon = (id: string) => {
     switch (id) {
       case "exchange":
@@ -27,8 +43,62 @@ export function Ecosystem() {
     }
   };
 
+  const exchangeFeatures = {
+    spot: {
+      title: "Spot Trading Engine",
+      tag: "INSTITUTIONAL PERFORMANCE",
+      description:
+        "High-throughput central limit order book (CLOB) engine handling 100,000+ TPS with sub-millisecond execution, advanced order types (Limit, Market, Stop-Loss), and deep institutional market maker liquidity.",
+      metrics: [
+        { label: "Execution Latency", value: "< 0.01s" },
+        { label: "Maturity", value: "Sub-Cent Gas" },
+        { label: "Slippage Protection", value: "Zero-Delta" },
+      ],
+      highlights: [
+        "Advanced Candlestick Charting & Depth Analysis",
+        "Sub-Millisecond Multi-Asset Matching Engine",
+        "Tier-1 Market Maker Liquidity Aggregation",
+      ],
+    },
+    p2p: {
+      title: "P2P Fiat & Crypto Gateway",
+      tag: "GLOBAL ESCROW PROTOCOL",
+      description:
+        "Decentralized peer-to-peer fiat on/off-ramp enabling users across 85+ countries to buy and sell OKN directly with local bank transfers, mobile money, and digital payment methods backed by smart escrow.",
+      metrics: [
+        { label: "Supported Countries", value: "85+ Nations" },
+        { label: "Payment Methods", value: "150+ Channels" },
+        { label: "Maker Platform Fee", value: "0% Free" },
+      ],
+      highlights: [
+        "Smart Contract Escrow Security Protection",
+        "Verified Merchant Tier & Community Reputation",
+        "Instant Local Fiat Settlement via Mobile & Bank",
+      ],
+    },
+    swap: {
+      title: "Instant Cross-Chain Swap",
+      tag: "ATOMIC ROUTING",
+      description:
+        "Frictionless, one-click decentralized liquidity bridge routing transactions between BNB Smart Chain, Arbitrum, Ethereum, and Solana with automated best-execution pricing and zero bridging friction.",
+      metrics: [
+        { label: "Supported Chains", value: "EVM & Solana" },
+        { label: "Bridge Finality", value: "< 15 Secs" },
+        { label: "Liquidity Routing", value: "Multi-DEX" },
+      ],
+      highlights: [
+        "Automated Optimal Gas & Fee Routing",
+        "Atomic Cross-Chain Smart Liquidity Bridges",
+        "Direct Self-Custody Wallet-to-Wallet Swaps",
+      ],
+    },
+  };
+
   return (
-    <section id="ecosystem" className="py-24 bg-gradient-to-b from-[#F8F9FE] to-[#EFF3FD] dark:from-[#06070B] dark:to-[#090C16] relative overflow-hidden scroll-mt-24 transition-colors duration-500">
+    <section
+      id="ecosystem"
+      className="py-24 bg-gradient-to-b from-[#F8F9FE] to-[#EFF3FD] dark:from-[#06070B] dark:to-[#090C16] relative overflow-hidden scroll-mt-24 transition-colors duration-500"
+    >
       {/* Luminous Ambient Light Orbs for Refraction */}
       <div className="absolute top-1/4 left-10 w-[550px] h-[550px] bg-purple-600/20 dark:bg-purple-600/30 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[550px] h-[550px] bg-cyan-500/20 dark:bg-cyan-500/30 rounded-full blur-[150px] pointer-events-none" />
@@ -44,52 +114,122 @@ export function Ecosystem() {
 
         {/* Asymmetrical Editorial Grid with Apple Liquid Glass OS */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Main Hero Ecosystem Panel (Exchange & Network Primitives) */}
+          {/* Main Hero Ecosystem Panel: OKNexus Exchange (Expanded & Feature-Rich) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-8 rounded-3xl p-8 sm:p-10 glass-light dark:glass-dark relative overflow-hidden flex flex-col justify-between shadow-2xl hover:border-purple-400/80 transition-all duration-300"
+            className="lg:col-span-8 rounded-3xl p-6 sm:p-10 glass-light dark:glass-dark relative overflow-hidden flex flex-col justify-between shadow-2xl hover:border-purple-400/80 transition-all duration-300"
           >
             {/* Inner Refraction Glow */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-purple-600/25 dark:bg-purple-600/35 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-cyan-600/20 dark:bg-cyan-600/30 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/20 dark:bg-purple-600/30 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-600/20 dark:bg-cyan-600/25 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/15 dark:bg-purple-500/25 text-purple-700 dark:text-purple-300 text-xs font-bold uppercase tracking-wider mb-6 border border-purple-500/30 backdrop-blur-md">
-                <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                <span>Flagship Platform</span>
+              {/* Header Badge & Interactive Mode Switcher */}
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/15 dark:bg-purple-500/25 text-purple-700 dark:text-purple-300 text-xs font-bold uppercase tracking-wider border border-purple-500/30 backdrop-blur-md">
+                  <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                  <span>Flagship Trading Hub</span>
+                </div>
+
+                {/* 3 Interactive Feature Tabs */}
+                <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-200/70 dark:bg-white/10 border border-slate-300/60 dark:border-white/10 backdrop-blur-md">
+                  <button
+                    onClick={() => setActiveTab("spot")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      activeTab === "spot"
+                        ? "bg-white dark:bg-purple-600 text-purple-700 dark:text-white shadow-sm"
+                        : "text-slate-600 dark:text-slate-300 hover:text-purple-600"
+                    }`}
+                  >
+                    <CandlestickChart className="w-3.5 h-3.5" />
+                    <span>Spot</span>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("p2p")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      activeTab === "p2p"
+                        ? "bg-white dark:bg-purple-600 text-purple-700 dark:text-white shadow-sm"
+                        : "text-slate-600 dark:text-slate-300 hover:text-purple-600"
+                    }`}
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    <span>P2P Trading</span>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("swap")}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                      activeTab === "swap"
+                        ? "bg-white dark:bg-purple-600 text-purple-700 dark:text-white shadow-sm"
+                        : "text-slate-600 dark:text-slate-300 hover:text-purple-600"
+                    }`}
+                  >
+                    <ArrowLeftRight className="w-3.5 h-3.5" />
+                    <span>Swap</span>
+                  </button>
+                </div>
               </div>
 
-              <h3 className="font-heading text-3xl sm:text-4xl font-black text-slate-950 dark:text-white mb-4 tracking-tight">
+              <h3 className="font-heading text-3xl sm:text-4xl font-black text-slate-950 dark:text-white mb-2 tracking-tight">
                 OKNexus Exchange
               </h3>
 
-              <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed mb-8">
-                High-throughput decentralized &amp; institutional trading engine with ultra-low latency, deep liquidity order routing, and zero-slippage execution powered by OKN on BNB Smart Chain.
-              </p>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed mb-6">
+                    {exchangeFeatures[activeTab].description}
+                  </p>
+
+                  {/* 3 Active Metrics Strip */}
+                  <div className="grid grid-cols-3 gap-3 mb-6">
+                    {exchangeFeatures[activeTab].metrics.map((m) => (
+                      <div
+                        key={m.label}
+                        className="p-3 rounded-2xl bg-white/70 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 text-center shadow-xs"
+                      >
+                        <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-0.5">
+                          {m.label}
+                        </span>
+                        <span className="font-mono text-sm sm:text-base font-black text-purple-700 dark:text-purple-300">
+                          {m.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
-            {/* Clean High-Resolution Mockup in Frosted Vessel */}
-            <div className="relative z-10 w-full h-60 sm:h-72 rounded-2xl bg-white/80 dark:bg-black/40 border border-slate-200/80 dark:border-white/15 overflow-hidden flex items-center justify-center p-4 backdrop-blur-2xl shadow-inner">
-              <Image
-                src="/assets/exchancge mockup.png"
-                alt="OKNexus Exchange Interface"
-                width={520}
-                height={280}
-                className="object-contain max-h-full drop-shadow-[0_20px_40px_rgba(124,58,237,0.35)]"
-              />
+            {/* High-Resolution Exchange Showcase Mockup */}
+            <div className="relative z-10 w-full rounded-2xl bg-slate-950/90 dark:bg-black/60 border border-slate-200/80 dark:border-white/15 overflow-hidden flex items-center justify-center p-3 sm:p-5 backdrop-blur-2xl shadow-2xl mb-6">
+              <div className="relative w-full aspect-[16/9] max-h-[300px] flex items-center justify-center">
+                <Image
+                  src="/assets/exchancge mockup.png"
+                  alt="OKNexus Exchange Interface"
+                  fill
+                  className="object-contain drop-shadow-[0_20px_40px_rgba(124,58,237,0.45)]"
+                />
+              </div>
             </div>
 
-            <div className="relative z-10 pt-6 mt-6 border-t border-slate-200/70 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold text-slate-600 dark:text-slate-300">
-              <span className="font-mono text-purple-700 dark:text-purple-300 font-bold">
-                ⚡ 0.01s Execution Latency
-              </span>
-              <span className="text-slate-700 dark:text-slate-200">
-                Tier-1 Liquidity Aggregation
-              </span>
+            {/* 3 Live Feature Highlights List */}
+            <div className="relative z-10 pt-4 border-t border-slate-200/70 dark:border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {exchangeFeatures[activeTab].highlights.map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span className="leading-tight">{item}</span>
+                </div>
+              ))}
             </div>
           </motion.div>
 
@@ -117,6 +257,22 @@ export function Ecosystem() {
               <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                 On-chain neural network monitors liquidity flows, mempool risk signals, and order books to provide real-time predictive analytics.
               </p>
+
+              {/* Mini Feature List */}
+              <div className="space-y-2.5 p-4 rounded-2xl bg-white/60 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 mb-6">
+                <div className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-200 font-medium">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                  <span>Sub-Second Risk Scoring</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-200 font-medium">
+                  <span className="w-2 h-2 rounded-full bg-purple-400" />
+                  <span>Autonomous Liquidity Balancing</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-200 font-medium">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  <span>Predictive Slippage Modeling</span>
+                </div>
+              </div>
             </div>
 
             <div className="pt-4 border-t border-slate-200/80 dark:border-white/10 flex items-center justify-between text-xs font-bold text-purple-700 dark:text-purple-300">

@@ -17,12 +17,13 @@ export function TokenomicsChart({
 }: TokenomicsChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const size = 360;
+  // Enlarged chart dimensions to fill empty spaces
+  const size = 460;
   const center = size / 2;
-  const outerRadius = 140;
-  const innerRadius = 90;
-  const activeOuterRadius = 152;
-  const activeInnerRadius = 82;
+  const outerRadius = 185;
+  const innerRadius = 120;
+  const activeOuterRadius = 202;
+  const activeInnerRadius = 112;
 
   // Compute slice angles
   let currentAngle = -90; // Start at top
@@ -54,7 +55,6 @@ export function TokenomicsChart({
     iRadius: number,
     oRadius: number
   ) => {
-    // Avoid full 360 glitch
     const adjustedEnd = endAngle - startAngle >= 360 ? startAngle + 359.99 : endAngle;
     const largeArcFlag = adjustedEnd - startAngle <= 180 ? "0" : "1";
 
@@ -75,10 +75,10 @@ export function TokenomicsChart({
   const currentDisplay = activeAllocation || allocations[0];
 
   return (
-    <div className="relative w-full max-w-[400px] aspect-square flex items-center justify-center select-none">
+    <div className="relative w-full max-w-[460px] sm:max-w-[490px] aspect-square flex items-center justify-center select-none">
       {/* Background Ambient Glow */}
       <div
-        className="absolute inset-4 rounded-full blur-3xl opacity-40 dark:opacity-50 transition-colors duration-500 pointer-events-none"
+        className="absolute inset-2 rounded-full blur-3xl opacity-45 dark:opacity-55 transition-colors duration-500 pointer-events-none"
         style={{
           backgroundColor: currentDisplay.color,
         }}
@@ -87,12 +87,12 @@ export function TokenomicsChart({
       {/* SVG Chart */}
       <svg
         viewBox={`0 0 ${size} ${size}`}
-        className="w-full h-full transform drop-shadow-[0_15px_30px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+        className="w-full h-full transform drop-shadow-[0_20px_40px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)]"
       >
         <defs>
           {allocations.map((item, idx) => (
             <filter key={`glow-${idx}`} id={`glow-${idx}`} x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor={item.color} floodOpacity="0.45" />
+              <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor={item.color} floodOpacity="0.5" />
             </filter>
           ))}
         </defs>
@@ -111,7 +111,7 @@ export function TokenomicsChart({
               key={slice.name}
               d={path}
               fill={slice.color}
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.85 }}
               animate={{
                 opacity: 1,
                 scale: 1,
@@ -119,12 +119,12 @@ export function TokenomicsChart({
               }}
               transition={{
                 duration: 0.4,
-                delay: slice.index * 0.04,
+                delay: slice.index * 0.03,
                 type: "spring",
                 stiffness: 300,
                 damping: 20,
               }}
-              className="cursor-pointer transition-all duration-300 stroke-white/80 dark:stroke-slate-900 stroke-[2px] hover:brightness-110"
+              className="cursor-pointer transition-all duration-300 stroke-white/90 dark:stroke-[#090C16] stroke-[2.5px] hover:brightness-115"
               onMouseEnter={() => {
                 setHoveredIndex(slice.index);
                 onSelectAllocation(slice);
@@ -139,33 +139,33 @@ export function TokenomicsChart({
         <circle
           cx={center}
           cy={center}
-          r={innerRadius - 8}
-          className="fill-white/95 dark:fill-[#0A0C14] transition-colors duration-300 shadow-inner"
+          r={innerRadius - 10}
+          className="fill-white/95 dark:fill-[#0A0C16] transition-colors duration-300 shadow-inner"
         />
       </svg>
 
       {/* Interactive Center Content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-8">
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentDisplay.name}
-            initial={{ opacity: 0, scale: 0.9, y: 5 }}
+            initial={{ opacity: 0, scale: 0.9, y: 6 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -5 }}
+            exit={{ opacity: 0, scale: 0.9, y: -6 }}
             transition={{ duration: 0.25 }}
-            className="flex flex-col items-center"
+            className="flex flex-col items-center max-w-[200px]"
           >
             <span
-              className="w-2.5 h-2.5 rounded-full mb-1.5 shadow-xs"
+              className="w-3 h-3 rounded-full mb-2 shadow-xs"
               style={{ backgroundColor: currentDisplay.color }}
             />
-            <span className="text-3xl sm:text-4xl font-mono font-extrabold text-slate-900 dark:text-white tracking-tight leading-none">
+            <span className="text-4xl sm:text-5xl font-mono font-black text-slate-950 dark:text-white tracking-tight leading-none">
               {currentDisplay.percentage}%
             </span>
-            <span className="text-xs sm:text-sm font-heading font-bold text-slate-800 dark:text-slate-200 mt-1 line-clamp-1">
+            <span className="text-sm sm:text-base font-heading font-extrabold text-slate-900 dark:text-slate-100 mt-1.5 line-clamp-1">
               {currentDisplay.name}
             </span>
-            <span className="text-[10px] text-slate-400 dark:text-slate-400 font-mono mt-0.5">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1 font-semibold">
               {(currentDisplay.percentage * 50_000_000).toLocaleString()} OKN
             </span>
           </motion.div>
