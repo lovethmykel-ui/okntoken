@@ -97,8 +97,19 @@ export default function RootLayout({
             `,
           }}
         />
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+              }
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen bg-[#F8F9FE] dark:bg-[#06070B] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-purple-500/20 selection:text-purple-900 transition-colors duration-500">
+        <div id="google_translate_element" style={{ display: 'none' }}></div>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
