@@ -1,13 +1,31 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { TokenAllocation } from "@/data/siteContent";
 
 interface TokenomicsChartProps {
   allocations: TokenAllocation[];
   activeAllocation: TokenAllocation | null;
   onSelectAllocation: (item: TokenAllocation) => void;
+}
+
+function splitTitle(title: string): string[] {
+  if (title.length <= 16) return [title];
+  if (title.includes(" (")) {
+    const parts = title.split(" (");
+    return [parts[0], `(${parts[1]}`];
+  }
+  if (title.includes(" & ")) {
+    const parts = title.split(" & ");
+    return [`${parts[0]} &`, parts[1]];
+  }
+  const words = title.split(" ");
+  if (words.length >= 2) {
+    const mid = Math.ceil(words.length / 2);
+    return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
+  }
+  return [title];
 }
 
 export function TokenomicsChart({
@@ -17,13 +35,13 @@ export function TokenomicsChart({
 }: TokenomicsChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Large, prominent chart dimensions with expansive inner hole to prevent text overlap
+  // Large SVG coordinate canvas (560x560) with spacious inner hole (340px diameter)
   const size = 560;
   const center = size / 2;
-  const outerRadius = 235;
-  const innerRadius = 158;
-  const activeOuterRadius = 255;
-  const activeInnerRadius = 150;
+  const outerRadius = 240;
+  const innerRadius = 168;
+  const activeOuterRadius = 258;
+  const activeInnerRadius = 160;
 
   // Compute slice angles
   let currentAngle = -90; // Start at top
@@ -73,18 +91,19 @@ export function TokenomicsChart({
   };
 
   const currentDisplay = activeAllocation || allocations[0];
+  const nameLines = splitTitle(currentDisplay.name);
 
   return (
-    <div className="relative w-full max-w-[540px] sm:max-w-[580px] lg:max-w-[620px] aspect-square flex items-center justify-center select-none">
+    <div className="relative w-full max-w-[500px] sm:max-w-[560px] lg:max-w-[600px] aspect-square flex items-center justify-center select-none">
       {/* Background Ambient Glow */}
       <div
-        className="absolute inset-4 rounded-full blur-3xl opacity-40 dark:opacity-50 transition-colors duration-500 pointer-events-none"
+        className="absolute inset-6 rounded-full blur-3xl opacity-40 dark:opacity-50 transition-colors duration-500 pointer-events-none"
         style={{
           backgroundColor: currentDisplay.color,
         }}
       />
 
-      {/* SVG Chart */}
+      {/* SVG Chart with Native Vector Slices AND Native Vector Typography */}
       <svg
         viewBox={`0 0 ${size} ${size}`}
         className="w-full h-full transform drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_25px_60px_rgba(0,0,0,0.7)]"
@@ -124,7 +143,7 @@ export function TokenomicsChart({
                 stiffness: 300,
                 damping: 20,
               }}
-              className="cursor-pointer transition-all duration-300 stroke-white/90 dark:stroke-[#090C16] stroke-[3px] hover:brightness-115"
+              className="cursor-pointer transition-all duration-300 stroke-white/95 dark:stroke-[#090C16] stroke-[3px] hover:brightness-115"
               onMouseEnter={() => {
                 setHoveredIndex(slice.index);
                 onSelectAllocation(slice);
@@ -135,54 +154,84 @@ export function TokenomicsChart({
           );
         })}
 
-        {/* Inner Circle Backdrop */}
+        {/* Inner Circle Backdrop Vessel */}
         <circle
           cx={center}
           cy={center}
-          r={innerRadius - 8}
-          className="fill-white/95 dark:fill-[#0A0C16] transition-colors duration-300 shadow-inner"
+          r={innerRadius - 6}
+          className="fill-white/98 dark:fill-[#080A12] stroke-purple-200/40 dark:stroke-white/10 stroke-[2px] transition-colors duration-300 shadow-inner"
         />
-      </svg>
 
-      {/* Interactive Center Content with Guaranteed No Overlap */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center p-6 sm:p-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentDisplay.name}
-            initial={{ opacity: 0, scale: 0.9, y: 6 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -6 }}
-            transition={{ duration: 0.25 }}
-            className="flex flex-col items-center justify-center max-w-[260px] sm:max-w-[290px] w-full"
+        {/* Native Vector Typography - Scales 1:1 with SVG without any possibility of text overflow */}
+        <g className="transition-all duration-300">
+          {/* Top Tag: Pill Dot + Allocation Label */}
+          <circle
+            cx={center - 48}
+            cy={center - 68}
+            r={5}
+            fill={currentDisplay.color}
+          />
+          <text
+            x={center - 36}
+            y={center - 64}
+            textAnchor="start"
+            className="fill-slate-500 dark:fill-slate-400 font-mono text-[13px] font-bold uppercase tracking-wider"
           >
-            {/* Active Color Pill Indicator */}
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <span
-                className="w-2.5 h-2.5 rounded-full shadow-xs"
-                style={{ backgroundColor: currentDisplay.color }}
-              />
-              <span className="text-[11px] uppercase tracking-wider font-mono font-bold text-slate-500 dark:text-slate-400">
-                Allocation
-              </span>
-            </div>
+            ALLOCATION
+          </text>
 
-            {/* Large Percentage */}
-            <span className="text-5xl sm:text-6xl font-mono font-black text-slate-950 dark:text-white tracking-tight leading-none my-1">
-              {currentDisplay.percentage}%
-            </span>
+          {/* Big Center Percentage */}
+          <text
+            x={center}
+            y={center - 4}
+            textAnchor="middle"
+            className="fill-slate-950 dark:fill-white font-mono text-[62px] font-black tracking-tight"
+          >
+            {currentDisplay.percentage}%
+          </text>
 
-            {/* Title with wrapping and no overflow */}
-            <span className="text-base sm:text-lg font-heading font-black text-slate-900 dark:text-slate-100 leading-snug px-1 line-clamp-2 mt-1">
-              {currentDisplay.name}
-            </span>
+          {/* Allocation Title (1 or 2 lines centered within the 336px hole) */}
+          {nameLines.length === 1 ? (
+            <text
+              x={center}
+              y={center + 38}
+              textAnchor="middle"
+              className="fill-slate-900 dark:fill-slate-100 font-sans text-[21px] font-bold tracking-tight"
+            >
+              {nameLines[0]}
+            </text>
+          ) : (
+            <>
+              <text
+                x={center}
+                y={center + 30}
+                textAnchor="middle"
+                className="fill-slate-900 dark:fill-slate-100 font-sans text-[19px] font-bold tracking-tight"
+              >
+                {nameLines[0]}
+              </text>
+              <text
+                x={center}
+                y={center + 54}
+                textAnchor="middle"
+                className="fill-slate-900 dark:fill-slate-100 font-sans text-[19px] font-bold tracking-tight"
+              >
+                {nameLines[1]}
+              </text>
+            </>
+          )}
 
-            {/* Token Counter */}
-            <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-mono mt-1 font-bold">
-              {(currentDisplay.percentage * 50_000_000).toLocaleString()} OKN
-            </span>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          {/* Token Counter */}
+          <text
+            x={center}
+            y={nameLines.length === 1 ? center + 68 : center + 82}
+            textAnchor="middle"
+            className="fill-slate-500 dark:fill-slate-400 font-mono text-[14px] font-semibold"
+          >
+            {(currentDisplay.percentage * 50_000_000).toLocaleString()} OKN
+          </text>
+        </g>
+      </svg>
     </div>
   );
 }
