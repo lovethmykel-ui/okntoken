@@ -58,8 +58,16 @@ export const metadata: Metadata = {
     images: ["/brand/OKN_coin_transparent_padded.png"],
   },
   icons: {
-    icon: "/brand/OKN_logo_mark_transparent.png",
-    apple: "/brand/OKN_logo_mark_transparent.png",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/brand/OKN_logo_mark_transparent.png", type: "image/png" },
+    ],
+    shortcut: ["/favicon.ico"],
+    apple: [
+      { url: "/apple-icon.png" },
+      { url: "/brand/OKN_logo_mark_transparent.png" },
+    ],
   },
 };
 
@@ -71,7 +79,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${plusJakarta.variable} scroll-smooth`}>
       <head>
-        <link rel="icon" href="/brand/OKN_logo_mark_transparent.png" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -88,7 +98,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-[#F8F9FE] dark:bg-[#050506] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-purple-500/20 selection:text-purple-900 transition-colors duration-300">
+      <body className="min-h-screen bg-[#F8F9FE] dark:bg-[#06070B] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-purple-500/20 selection:text-purple-900 transition-colors duration-500">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
