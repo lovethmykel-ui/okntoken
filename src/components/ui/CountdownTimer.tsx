@@ -61,79 +61,37 @@ export function CountdownTimer({
     );
   }
 
-  const isDark = theme === "dark";
+  const items = [
+    { label: "DAYS", value: formatNumber(timeLeft.days), isSec: false },
+    { label: "HOURS", value: formatNumber(timeLeft.hours), isSec: false },
+    { label: "MINS", value: formatNumber(timeLeft.minutes), isSec: false },
+    { label: "SECS", value: formatNumber(timeLeft.seconds), isSec: true },
+  ];
 
   return (
-    <div className={`flex items-center gap-2 sm:gap-3 ${className}`}>
-      {/* Days */}
-      <div className="flex flex-col items-center">
-        <div
-          className={`flex items-center justify-center min-w-[50px] sm:min-w-[62px] h-[52px] sm:h-[64px] rounded-2xl font-mono text-xl sm:text-2xl font-bold shadow-inner ${
-            isDark
-              ? "bg-white/10 text-white border border-white/15"
-              : "bg-slate-100 text-slate-900 border border-slate-200"
-          }`}
-        >
-          {formatNumber(timeLeft.days)}
+    <div className={`grid grid-cols-4 gap-2 w-full ${className}`}>
+      {items.map((item) => (
+        <div key={item.label} className="flex flex-col items-center min-w-0">
+          <div
+            className={`w-full py-2.5 sm:py-3 rounded-2xl flex items-center justify-center font-mono text-base sm:text-xl font-black tracking-tight border transition-colors shadow-2xs ${
+              item.isSec
+                ? "bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-300 border-purple-200 dark:border-purple-500/30"
+                : "bg-slate-100/90 dark:bg-white/5 text-slate-900 dark:text-white border-slate-200/80 dark:border-white/10"
+            }`}
+          >
+            {item.value}
+          </div>
+          <span
+            className={`text-[10px] uppercase tracking-wider font-bold mt-1.5 truncate ${
+              item.isSec
+                ? "text-purple-600 dark:text-purple-400"
+                : "text-slate-500 dark:text-slate-400"
+            }`}
+          >
+            {item.label}
+          </span>
         </div>
-        <span className={`text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-1.5 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-          Days
-        </span>
-      </div>
-
-      <span className={`text-xl font-bold self-start mt-3 sm:mt-4 ${isDark ? "text-slate-500" : "text-slate-400"}`}>:</span>
-
-      {/* Hours */}
-      <div className="flex flex-col items-center">
-        <div
-          className={`flex items-center justify-center min-w-[50px] sm:min-w-[62px] h-[52px] sm:h-[64px] rounded-2xl font-mono text-xl sm:text-2xl font-bold shadow-inner ${
-            isDark
-              ? "bg-white/10 text-white border border-white/15"
-              : "bg-slate-100 text-slate-900 border border-slate-200"
-          }`}
-        >
-          {formatNumber(timeLeft.hours)}
-        </div>
-        <span className={`text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-1.5 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-          Hours
-        </span>
-      </div>
-
-      <span className={`text-xl font-bold self-start mt-3 sm:mt-4 ${isDark ? "text-slate-500" : "text-slate-400"}`}>:</span>
-
-      {/* Minutes */}
-      <div className="flex flex-col items-center">
-        <div
-          className={`flex items-center justify-center min-w-[50px] sm:min-w-[62px] h-[52px] sm:h-[64px] rounded-2xl font-mono text-xl sm:text-2xl font-bold shadow-inner ${
-            isDark
-              ? "bg-white/10 text-white border border-white/15"
-              : "bg-slate-100 text-slate-900 border border-slate-200"
-          }`}
-        >
-          {formatNumber(timeLeft.minutes)}
-        </div>
-        <span className={`text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-1.5 ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-          Mins
-        </span>
-      </div>
-
-      <span className={`text-xl font-bold self-start mt-3 sm:mt-4 ${isDark ? "text-slate-500" : "text-slate-400"}`}>:</span>
-
-      {/* Seconds */}
-      <div className="flex flex-col items-center">
-        <div
-          className={`flex items-center justify-center min-w-[50px] sm:min-w-[62px] h-[52px] sm:h-[64px] rounded-2xl font-mono text-xl sm:text-2xl font-bold shadow-inner ${
-            isDark
-              ? "bg-white/10 text-purple-400 border border-purple-500/30"
-              : "bg-purple-50 text-purple-600 border border-purple-200"
-          }`}
-        >
-          {formatNumber(timeLeft.seconds)}
-        </div>
-        <span className={`text-[10px] sm:text-xs uppercase tracking-wider font-medium mt-1.5 ${isDark ? "text-purple-400" : "text-purple-600"}`}>
-          Secs
-        </span>
-      </div>
+      ))}
     </div>
   );
 }
