@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { BrandLockup } from "@/components/ui/BrandLockup";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import { Menu, X, ExternalLink, Send } from "lucide-react";
 
 export function Navbar() {
@@ -59,6 +60,7 @@ export function Navbar() {
 
         {/* Action CTAs & Theme Toggle */}
         <div className="hidden md:flex items-center gap-2.5">
+          <LanguageSelector />
           <ThemeToggle />
 
           <a
@@ -84,6 +86,7 @@ export function Navbar() {
 
         {/* Mobile Action Controls */}
         <div className="flex items-center gap-2 md:hidden">
+          <LanguageSelector />
           <ThemeToggle />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
