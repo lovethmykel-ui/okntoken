@@ -1,0 +1,16 @@
+OKN DESIGN ASSET EXTRACTION
+Source: OKN Token landing-page mockup generated in this conversation.
+These are crops from the composite mockup; they preserve the rendered look but are not original source vectors/transparent renders.
+
+1. Hero OKN coin environment — 3D coin + platform + background.
+2. Hero 3D OKN token — close crop of the main coin.
+3. Holographic globe background — globe/environment treatment.
+4. Presale glass card art — glassmorphism card + coin/chart scene.
+5. Tokenomics glass donut — 3D segmented allocation graphic.
+6. Roadmap visual system — timeline/grid/card treatment.
+7. Community panel — purple gradient metrics card.
+8. Featured-in panel — editorial partner/logo layout.
+9. FAQ glass panel — translucent FAQ treatment.
+10. Partner trust strip — audit / infrastructure logo row.
+11. Footer brand system — footer composition.
+12. Nav brand lockup — OKN TOKEN header lockup.
