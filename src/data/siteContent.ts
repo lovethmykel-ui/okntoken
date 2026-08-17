@@ -1,10 +1,3 @@
-export interface TrustPartner {
-  name: string;
-  category?: string;
-  logo?: string;
-  verified?: boolean;
-}
-
 export interface FeatureItem {
   id: string;
   title: string;
@@ -18,12 +11,12 @@ export interface ComparisonRow {
   near: string;
   render: string;
   bittensor: string;
-  highlight?: boolean;
 }
 
 export interface TokenAllocation {
   name: string;
   percentage: number;
+  tokens: string;
   color: string;
   vesting: string;
 }
@@ -31,8 +24,8 @@ export interface TokenAllocation {
 export interface RoadmapMilestone {
   quarter: string;
   year: string;
-  status: "Completed" | "In Progress" | "Upcoming";
   title: string;
+  status: "Completed" | "In Progress" | "Upcoming";
   points: string[];
 }
 
@@ -42,41 +35,19 @@ export interface FaqItem {
 }
 
 export const siteContent = {
-  announcement: {
-    badge: "$0.10 ENTRY WINDOW",
-    text: "Join the current presale stage before the next scheduled increase.",
-    cta: "Join Presale",
-  },
-  
-  navigation: {
-    brandName: "OKN TOKEN",
-    tagline: "Powering the OKNexus Ecosystem",
-    links: [
-      { name: "Home", href: "#hero" },
-      { name: "About", href: "#about" },
-      { name: "Ecosystem", href: "#ecosystem" },
-      { name: "Utility", href: "#utility" },
-      { name: "Tokenomics", href: "#tokenomics" },
-      { name: "Roadmap", href: "#roadmap" },
-      { name: "FAQ", href: "#faq" },
-    ],
-    primaryCta: {
-      text: "Buy OKN",
-      href: "#presale",
-    },
-  },
-
   hero: {
-    eyebrow: "OKN TOKEN",
-    headlineLine1: "Powering the",
-    headlineLine2: "OKNexus Ecosystem",
-    description: "OKN Token powers a secure, transparent, and AI-powered ecosystem built for the next generation of digital finance.",
+    badge: "BNB SMART CHAIN NETWORK",
+    headlineLine1: "OKN",
+    headlineLine2: "TOKEN",
+    subheadline: "Powering the OKNexus Ecosystem",
+    description:
+      "OKN Token powers a secure, transparent, and AI-powered ecosystem built for the next generation of digital finance on Binance Smart Chain.",
     primaryCta: {
-      text: "Buy OKN",
+      label: "Buy OKN",
       href: "#presale",
     },
     secondaryCta: {
-      text: "Explore Ecosystem",
+      label: "Explore Ecosystem",
       href: "#ecosystem",
     },
     kycBadge: {
@@ -86,12 +57,12 @@ export const siteContent = {
     },
     presaleCard: {
       title: "Current Entry",
-      badge: "$0.10 ENTRY WINDOW",
-      currentPrice: "$0.10",
+      badge: "$0.05 ENTRY WINDOW",
+      currentPrice: "$0.05",
       currentStageLabel: "Current stage price",
-      nextStagePrice: "$0.148",
+      nextStagePrice: "$0.08",
       listingPrice: "$0.30",
-      listingPriceGain: "+200%",
+      listingPriceGain: "+500%",
       raisedAmount: "$17M+",
       investorCount: "19,523",
       ctaText: "Join Presale",
@@ -100,7 +71,8 @@ export const siteContent = {
 
   trustStrip: {
     headline: "Security & Infrastructure",
-    subtitle: "OKNexus connects proven infrastructure, open tooling, and AI-native blockchain execution into one ecosystem.",
+    subtitle:
+      "OKNexus connects proven infrastructure, open tooling, and AI-native blockchain execution into one ecosystem.",
     securityAudits: [
       { name: "CertiK", role: "SECURITY LEADER", verified: true },
       { name: "SOLIDProof", role: "VERIFIED AUDIT", verified: true },
@@ -118,51 +90,59 @@ export const siteContent = {
   about: {
     eyebrow: "A SMARTER BLOCKCHAIN FOR",
     headline: "The Next Generation of Digital Finance",
-    description: "OKN Token is designed to make blockchain interactions faster, easier, and smarter for users, builders, and ecosystem partners.",
+    description:
+      "OKN Token is designed to make blockchain interactions faster, easier, and smarter for users, builders, and ecosystem partners.",
     features: [
       {
         id: "feat-1",
         title: "AI at Network Level",
-        description: "AI lives in the chain itself, optimizing performance, transaction routing, security, and execution.",
+        description:
+          "AI lives in the chain itself, optimizing performance, transaction routing, security, and execution.",
         iconName: "brain",
       },
       {
         id: "feat-2",
         title: "Faster Experience",
-        description: "Sub-second transaction finality, lower gas fees, and seamless Web3 interaction flows.",
+        description:
+          "Sub-second transaction finality, lower gas fees, and seamless Web3 interaction flows.",
         iconName: "zap",
       },
       {
         id: "feat-3",
         title: "Smarter for Builders",
-        description: "An AI-native developer environment for decentralized apps, smart contracts, and cross-chain products.",
+        description:
+          "An AI-native developer environment for decentralized apps, smart contracts, and cross-chain products.",
         iconName: "code",
       },
       {
         id: "feat-4",
         title: "Clearer Onchain Activity",
-        description: "Deep contextual transaction intelligence, automated risk scoring, and real-time network behavior insights.",
+        description:
+          "Deep contextual transaction intelligence, automated risk scoring, and real-time network behavior insights.",
         iconName: "activity",
       },
       {
         id: "feat-5",
         title: "Built for Growth",
-        description: "Scalable Layer 1 infrastructure, robust token utility, multi-audited contracts, and a staged global rollout.",
+        description:
+          "Scalable Layer 1 infrastructure, robust token utility, multi-audited contracts, and a staged global rollout.",
         iconName: "trending",
       },
       {
         id: "feat-6",
         title: "Cross Chain Native",
-        description: "Designed from first principles to connect global ecosystems without locking users into an isolated silo.",
+        description:
+          "Designed from first principles to connect global ecosystems without locking users into an isolated silo.",
         iconName: "layers",
       },
     ] as FeatureItem[],
     stageCard: {
-      headline: "The $0.10 Window Won't Last",
-      subhead: "Join OKN Token at the current presale price before the next scheduled stage increase.",
-      effectivePrice: "$0.10",
-      bonusLabel: "+0% BONUS",
-      originalPrice: "$0.148",
+      headline: "The $0.05 Window Won't Last",
+      subhead:
+        "Join OKN Token at the current presale price before the next scheduled stage increase.",
+      effectivePrice: "$0.05",
+      bonusLabel: "+500% GAIN",
+      originalPrice: "$0.08",
       listingPrice: "$0.30",
       cta: "Join Presale",
     },
@@ -171,308 +151,339 @@ export const siteContent = {
   comparison: {
     eyebrow: "ECOSYSTEM BENCHMARK",
     headline: "How OKN Token compares to other AI blockchains",
-    subhead: "AI-native Layer 1 execution with early presale access. Here's how it stacks up.",
+    subhead:
+      "AI-native Layer 1 execution with early presale access. Here's how it stacks up.",
     headers: ["Category", "OKN Token", "NEAR", "Render", "Bittensor"],
     rows: [
       {
         category: "Token Price",
-        okn: "$0.132 presale",
+        okn: "$0.05 presale",
         near: "$2.11",
-        render: "$1.62",
-        bittensor: "$207.65",
+        render: "$5.84",
+        bittensor: "$320.10",
       },
       {
-        category: "FDV",
-        okn: "~$283.8M",
-        near: "~$2.70B",
-        render: "~$854.2M",
-        bittensor: "~$4.34B",
+        category: "Network Purpose",
+        okn: "L1 for AI Data & Logic",
+        near: "User-Owned AI & Sharding",
+        render: "Distributed GPU Compute",
+        bittensor: "Machine Intelligence Subnets",
       },
       {
-        category: "Layer 1 Infrastructure",
+        category: "Core Strength",
+        okn: "Onchain AI Execution",
+        near: "Chain Abstraction",
+        render: "3D & AI Rendering",
+        bittensor: "AI Model Monetization",
+      },
+      {
+        category: "Consensus Mechanism",
+        okn: "Hybrid PoS + AI Engine",
+        near: "Nightshade PoS",
+        near_suffix: "PoS",
+        render: "Proof of Render / Burn",
+        bittensor: "Proof of Intelligence",
+      },
+      {
+        category: "Native AI Agents",
         okn: "Yes",
         near: "Yes",
         render: "No",
         bittensor: "Yes",
-        highlight: true,
       },
       {
-        category: "User Facing AI",
-        okn: "Yes",
-        near: "Partial",
-        render: "No",
-        bittensor: "Partial",
-        highlight: true,
+        category: "Cross-Chain Architecture",
+        okn: "Native Multi-Chain Hub",
+        near: "Aurora Bridge + MPC",
+        render: "Solana Bridge",
+        bittensor: "Substrate Compatible",
       },
       {
-        category: "Presale Access",
+        category: "Ecosystem Exchange",
         okn: "Yes",
         near: "No",
         render: "No",
         bittensor: "No",
-        highlight: true,
-      },
-      {
-        category: "Audits",
-        okn: "CertiK + SolidProof",
-        near: "Varies",
-        render: "Varies",
-        bittensor: "Varies",
       },
     ] as ComparisonRow[],
   },
 
   ecosystem: {
-    eyebrow: "OKNEXUS ECOSYSTEM",
-    headline: "One Token. Multiple Possibilities.",
-    description: "OKN fuels an expansive network of financial primitives, AI automation, and high-performance Web3 services.",
+    eyebrow: "A CONNECTED ECOSYSTEM",
+    headline: "One network. Endless possibilities.",
+    description:
+      "From onchain trading and autonomous AI agents to staking rewards and cross-chain execution, OKNexus is built to power the next generation of decentralized applications.",
     pillars: [
       {
         id: "exchange",
         title: "OKNexus Exchange",
-        tag: "Core Engine",
-        description: "High-throughput spot, derivatives, and P2P trading with ultra-low latency and deep institutional liquidity.",
-        stats: "0.01s Latency • Institutional Grade",
+        tag: "FLAGSHIP PLATFORM",
+        description:
+          "Institutional and decentralized trading engine built for speed, transparency, deep liquidity, and zero-slippage routing.",
+        stats: "0.01s latency • $0 Gas Options",
       },
       {
         id: "ai-agents",
-        title: "AI Prediction & Trading Agents",
-        tag: "AI Intelligence",
-        description: "Autonomous algorithms that parse on-chain order books, transaction telemetry, and sentiment to execute optimal trades.",
-        stats: "24/7 Autopilot • Risk Aware",
+        title: "AI Prediction Agent",
+        tag: "AUTONOMOUS INTELLIGENCE",
+        description:
+          "Onchain neural network monitoring liquidity flows, mempool risk signals, and order books for predictive execution.",
+        stats: "Live Risk Scoring • Automated Balancing",
       },
       {
         id: "staking",
         title: "Staking & Yield Vaults",
-        tag: "DeFi Primitives",
-        description: "Lock OKN tokens to secure network validation, earn protocol fee distributions, and unlock governance tiers.",
-        stats: "Tiered Multipliers • Non-Custodial",
+        tag: "DEFI PRIMITIVES",
+        description:
+          "Lock OKN to secure consensus validation, capture exchange revenue share, and earn tiered multiplier yields.",
+        stats: "Tiered Multipliers • Non-custodial",
       },
       {
         id: "crosschain",
         title: "Cross-Chain Instant Swaps",
-        tag: "Interoperability",
-        description: "Frictionless bridging and atomic cross-chain liquidity across Ethereum, Arbitrum, Solana, and major L1/L2 networks.",
+        tag: "INTEROPERABILITY",
+        description:
+          "Frictionless bridging and atomic execution connecting BNB Smart Chain, Arbitrum, Ethereum, and Solana.",
         stats: "Multi-Chain Routing • Zero Slippage",
       },
       {
         id: "launchpad",
         title: "OKN Launchpad",
-        tag: "Incubation",
-        description: "Guaranteed allocation tiers for the most promising early-stage Web3, AI, and fintech decentralized projects.",
+        tag: "INCUBATION",
+        description:
+          "Vetted early-stage Web3 and AI protocol launches with guaranteed tier allocation for OKN holders.",
         stats: "Vetted Tier Access • Community First",
       },
       {
         id: "security",
         title: "Institutional Custody & Wallet",
-        tag: "Security",
-        description: "Multi-signature key security, biometric authentication, and smart-contract protected storage for all assets.",
+        tag: "SECURITY",
+        description:
+          "Multi-sig threshold architecture, biometric security, and full smart contract verification with real-time audit protection.",
         stats: "AssureDeFi KYC • Multi-Audited",
       },
     ],
   },
 
   utility: {
-    eyebrow: "TOKEN UTILITY",
-    headline: "More Than a Token. The Operating Fuel of OKNexus.",
-    description: "Every interaction across the OKNexus ecosystem leverages OKN as its fundamental economic and governance backbone.",
+    eyebrow: "TOKEN UTILITY & VALUE FLOW",
+    headline: "The Power Behind Every Network Interaction",
+    description:
+      "OKN is not a speculative token. It is the lifeblood utility engine driving transaction execution, governance rights, exchange fee discounts, and network yield distribution.",
     utilities: [
       {
-        title: "Fee Discounts & Zero-Gas Swaps",
-        desc: "Holders enjoy up to 80% discount on exchange trading fees and subsidized network gas fees across ecosystem smart contracts.",
+        title: "Transaction & Gas Settlement",
+        desc: "Power all transactions, smart contract executions, and state transitions across the OKNexus network with ultra-low, predictable fees.",
       },
       {
-        title: "Protocol Governance",
-        desc: "Participate directly in key protocol proposals, liquidity incentive allocations, asset listings, and treasury distributions.",
+        title: "Staking & Revenue Share",
+        desc: "Stake OKN in decentralized security pools to earn a proportionate share of OKNexus Exchange trading volume and sequencer fees.",
       },
       {
-        title: "Staking & Fee Sharing",
-        desc: "Stake OKN in protocol revenue pools to capture real yield generated from exchange trading fees and swap volume.",
+        title: "Decentralized Governance",
+        desc: "Vote on protocol upgrades, grant distributions, parameter adjustments, and fee schedule optimizations.",
       },
       {
-        title: "AI Feature Access Tiers",
-        desc: "Unlock proprietary AI market intelligence algorithms, algorithmic signals, and automated copy-trading capabilities.",
+        title: "AI Agent Compute Credits",
+        desc: "Deploy, run, and query autonomous onchain AI agents and predictive models using OKN as the computational gas token.",
       },
     ],
   },
 
   tokenomics: {
-    eyebrow: "TRANSPARENT DISTRIBUTION",
-    headline: "OKN Tokenomics",
-    description: "OKN is the native utility token of the OKNexus ecosystem powering network usage, AI features, and long-term ecosystem growth.",
-    callout: "The presale is part of the 30% Public Sale allocation unlocked at TGE.",
+    eyebrow: "STRUCTURED FOR SUSTAINABILITY",
+    headline: "Transparent Supply & Allocation",
+    description:
+      "A disciplined economic design with structured multi-year vesting, locked liquidity pools, and no hidden minting mechanics.",
+    totalSupply: "5,000,000,000 OKN",
     allocations: [
-      { name: "Public Sale", percentage: 30, color: "#8B5CF6", vesting: "TGE unlock, 36 mo linear vest" },
-      { name: "Treasury", percentage: 15, color: "#06B6D4", vesting: "Strategic long-term ecosystem reserve" },
-      { name: "Ecosystem", percentage: 15, color: "#EC4899", vesting: "Linear vest, 12 mo cliff, 24 mo vest" },
-      { name: "Team", percentage: 10, color: "#3B82F6", vesting: "12 mo cliff, 24 mo linear vest" },
-      { name: "Liquidity", percentage: 10, color: "#10B981", vesting: "Locked at TGE, 6 mo cliff, 18 mo vest" },
-      { name: "Private Sale", percentage: 8, color: "#F59E0B", vesting: "Strategic institutional partners" },
-      { name: "Rewards / Burn", percentage: 8, color: "#D946EF", vesting: "Protocol emissions & deflationary burns" },
-      { name: "Seed / Marketing", percentage: 5, color: "#6366F1", vesting: "Vesting over 18 months" },
+      {
+        name: "Public Sale (Presale)",
+        percentage: 30,
+        tokens: "1,500,000,000 OKN",
+        color: "#7C3AED",
+        vesting: "15% at TGE, linear monthly release over 18 months",
+      },
+      {
+        name: "Ecosystem & Grants",
+        percentage: 15,
+        tokens: "750,000,000 OKN",
+        color: "#06B6D4",
+        vesting: "Locked for 6 months, then quarterly release over 36 months",
+      },
+      {
+        name: "Treasury Reserve",
+        percentage: 15,
+        tokens: "750,000,000 OKN",
+        color: "#EC4899",
+        vesting: "Multi-sig controlled, 48-month strategic linear release",
+      },
+      {
+        name: "Core Team & Advisors",
+        percentage: 10,
+        tokens: "500,000,000 OKN",
+        color: "#F59E0B",
+        vesting: "12-month cliff, followed by 24-month linear vesting",
+      },
+      {
+        name: "Liquidity Pools (DEX/CEX)",
+        percentage: 10,
+        tokens: "500,000,000 OKN",
+        color: "#10B981",
+        vesting: "100% locked into verified automated market maker liquidity",
+      },
+      {
+        name: "Private Sale Rounds",
+        percentage: 8,
+        tokens: "400,000,000 OKN",
+        color: "#8B5CF6",
+        vesting: "10% at TGE, 6-month lock, then 12-month linear vesting",
+      },
+      {
+        name: "Staking Rewards & Burn",
+        percentage: 8,
+        tokens: "400,000,000 OKN",
+        color: "#3B82F6",
+        vesting: "Programmatic on-chain distribution based on validator uptime",
+      },
+      {
+        name: "Seed & Strategic Marketing",
+        percentage: 5,
+        tokens: "250,000,000 OKN",
+        color: "#6366F1",
+        vesting: "6-month cliff, linear vesting over 18 months",
+      },
     ] as TokenAllocation[],
-    stats: [
-      { label: "Total Supply", value: "1,000,000,000 OKN", highlight: false },
-      { label: "Initial Market Cap", value: "~$8.5M", highlight: false },
-      { label: "FDV", value: "~$283.8M", highlight: true },
-      { label: "Circulating at TGE", value: "~12%", highlight: false },
-    ],
   },
 
   roadmap: {
-    eyebrow: "STRATEGIC EXECUTION",
-    headline: "OKNexus Roadmap",
-    description: "A phased rollout from core infrastructure and AI features to ecosystem expansion and global network utility.",
+    eyebrow: "EXECUTION TIMELINE",
+    headline: "Built on milestones, not promises.",
+    description:
+      "A systematic, phase-by-phase rollout engineered to deliver real utility, robust infrastructure, and global adoption.",
     milestones: [
       {
-        quarter: "Q1",
+        quarter: "Phase 01",
         year: "2025",
+        title: "Genesis & Foundation",
         status: "Completed",
-        title: "Idea Foundation",
         points: [
-          "Core vision defined: AI-native chain with transaction risk awareness",
-          "Founding team and global contributor base assembled",
-          "Early technical direction and design principles established",
-          "First whitepaper and architecture litepaper published",
+          "OKN Token smart contract development (OpenZeppelin standards)",
+          "Multi-stage CertiK & SolidProof security audits completed",
+          "AssureDeFi KYC verification and institutional compliance",
+          "Presale infrastructure and Merkle claim engine deployment",
         ],
       },
       {
-        quarter: "Q2",
-        year: "2025",
-        status: "Completed",
-        title: "Early Access Community",
-        points: [
-          "Token infrastructure engineered and tested",
-          "Independent third-party security audits completed",
-          "Early supporter whitelist opened to global community",
-          "Official verified channels launched across major platforms",
-        ],
-      },
-      {
-        quarter: "Q3",
-        year: "2025",
-        status: "Completed",
-        title: "Beta Testnet",
-        points: [
-          "First public testnet brought online with high uptime",
-          "Block explorer support and telemetry dashboard introduced",
-          "Faucet and developer onboarding SDKs made available",
-          "Initial feedback loops with validator community",
-        ],
-      },
-      {
-        quarter: "Q4",
-        year: "2025",
-        status: "Completed",
-        title: "Advanced Testnet",
-        points: [
-          "AI transaction risk awareness prototype demonstrated",
-          "Wallet and swap flow tested end-to-end under high load",
-          "Network throughput and gas optimization improvements",
-          "Expanded developer documentation and bounty program",
-        ],
-      },
-      {
-        quarter: "Q1",
-        year: "2026",
-        status: "Completed",
-        title: "Infrastructure Scaling",
-        points: [
-          "Core infrastructure prepared for production-scale workloads",
-          "Network tooling and validator node operations hardened",
-          "Explorer and indexing microservices strengthened",
-          "Groundwork laid for upcoming AI feature suite",
-        ],
-      },
-      {
-        quarter: "Q2",
-        year: "2026",
+        quarter: "Phase 02",
+        year: "Q1-Q2 2026",
+        title: "Ecosystem Alpha & Community Expansion",
         status: "In Progress",
-        title: "Mainnet Preparation",
         points: [
-          "Mainnet release candidate deployed to staging and stress-tested",
-          "Additional comprehensive smart contract security reviews",
-          "Institutional developer tooling & API documentation published",
-          "Strategic liquidity and ecosystem partner onboarding",
+          "Telegram Mini-App and bot deployment (100k+ active champions)",
+          "Public Presale entry stages ($0.05 stage live)",
+          "Exchange alpha testnet with sub-second order book simulation",
+          "Strategic liquidity agreements with Tier-1 Market Makers",
         ],
       },
       {
-        quarter: "Q3",
-        year: "2026",
+        quarter: "Phase 03",
+        year: "Q3 2026",
+        title: "TGE, Mainnet & Exchange Launch",
         status: "Upcoming",
-        title: "Token Launch",
         points: [
-          "Production mainnet goes live globally",
-          "Token Generation Event (TGE) and public exchange listings",
-          "On-chain staking and decentralized governance enabled",
-          "Builder grant programs and ecosystem fund deployment",
+          "Official Token Generation Event (TGE) and initial DEX/CEX listings",
+          "OKNexus Exchange mainnet launch with zero-slippage routing",
+          "Automated on-chain staking vaults and revenue share activation",
+          "First cohort of decentralized launchpad project incubations",
+        ],
+      },
+      {
+        quarter: "Phase 04",
+        year: "Q4 2026+",
+        title: "AI Autopilot & Global Scalability",
+        status: "Upcoming",
+        points: [
+          "Autonomous onchain AI Prediction Agent full deployment",
+          "Cross-chain multi-asset atomic swap network expansion",
+          "Decentralized DAO governance handover and treasury activation",
+          "Enterprise and institutional crypto payment gateway integration",
         ],
       },
     ] as RoadmapMilestone[],
   },
 
   community: {
-    eyebrow: "GLOBAL MOVEMENT",
-    headline: "Our Community 100K+",
-    description: "A growing community of holders, builders, and supporters backed by leading voices across Web3.",
+    eyebrow: "GLOBAL COMMUNITY",
+    headline: "Join a thriving network of 100,000+ pioneers.",
+    description:
+      "Connect with traders, developers, institutional partners, and crypto visionaries building the future of AI-powered decentralized finance.",
     stats: [
       { label: "Community Members", value: "100K+" },
-      { label: "Community Investors", value: "10,814" },
-      { label: "KOL Partners", value: "40+" },
+      { label: "Participating Investors", value: "19.5K+" },
+      { label: "Countries Represented", value: "85+" },
     ],
     socials: [
-      { name: "Telegram", href: "https://t.me/oknexus", handle: "@oknexus" },
-      { name: "X (Twitter)", href: "https://x.com/oknexus", handle: "@OKNexus" },
-      { name: "Discord", href: "https://discord.gg/oknexus", handle: "discord.gg/oknexus" },
-      { name: "YouTube", href: "https://youtube.com/@oknexus", handle: "@OKNexusOfficial" },
-      { name: "Instagram", href: "https://instagram.com/oknexus", handle: "@oknexus" },
+      { name: "Telegram", handle: "@OkNexusExchange", href: "https://t.me/OkNexusExchange" },
+      { name: "X (Twitter)", handle: "@OkNexusExchange", href: "https://x.com/OkNexusExchange" },
+      { name: "YouTube", handle: "@OkNexusExchange", href: "https://www.youtube.com/@OkNexusExchange" },
+      { name: "Discord", handle: "OKNexus Discord", href: "https://discord.com" },
+      { name: "Instagram", handle: "@oknexusexchange", href: "https://instagram.com" },
     ],
   },
 
   media: {
-    headline: "As Featured In",
+    headline: "AS FEATURED IN TOP WEB3 & FINANCIAL OUTLETS",
     outlets: [
-      { name: "Cointelegraph", highlight: "Tier 1 Media" },
-      { name: "CoinMarketCap", highlight: "Tracked" },
-      { name: "Yahoo Finance", highlight: "Editorial" },
-      { name: "Cryptonews", highlight: "Featured" },
-      { name: "Benzinga", highlight: "Market Pulse" },
-      { name: "Techopedia", highlight: "Analysis" },
+      { name: "CoinDesk", logo: "/brand/coindesk.svg" },
+      { name: "CoinMarketCap", logo: "/brand/cmc.svg" },
+      { name: "CoinGecko", logo: "/brand/coingecko.svg" },
+      { name: "Decrypt", logo: "/brand/decrypt.svg" },
+      { name: "Blockworks", logo: "/brand/blockworks.svg" },
+      { name: "Binance Feed", logo: "/brand/binance.svg" },
     ],
   },
 
   faq: {
-    eyebrow: "KNOWLEDGE BASE",
+    eyebrow: "GOT QUESTIONS?",
     headline: "Frequently Asked Questions",
-    description: "Everything you need to know about OKN Token, the presale stages, and the OKNexus ecosystem.",
+    description:
+      "Find immediate answers about the OKN presale, token economics, claim mechanics, and technical architecture.",
     items: [
       {
         question: "What is OKN Token?",
-        answer: "OKN Token is the native utility and governance asset of the OKNexus ecosystem. It powers transaction fee settlement, AI trading engine access, decentralized governance, staking rewards, and cross-chain liquidity routing.",
+        answer:
+          "OKN Token is the native utility and governance asset of the OKNexus ecosystem. It powers transaction fee settlement, AI trading engine access, decentralized governance, staking rewards, and cross-chain liquidity routing.",
       },
       {
         question: "What makes OKNexus different from traditional blockchains?",
-        answer: "OKNexus integrates AI at the network consensus level to provide real-time transaction risk scoring, optimized routing, and autonomous agent capabilities, combined with sub-second finality and multi-chain interoperability.",
+        answer:
+          "OKNexus integrates AI at the network consensus level to provide real-time transaction risk scoring, optimized routing, and autonomous agent capabilities, combined with sub-second finality and multi-chain interoperability.",
       },
       {
         question: "What is the current entry price and listing price?",
-        answer: "The current presale stage entry price is $0.10 per OKN. The confirmed listing price at Token Generation Event (TGE) is scheduled at $0.30 per OKN, representing a +200% base price delta.",
+        answer:
+          "The current presale stage entry price is $0.05 per OKN. The confirmed listing price at Token Generation Event (TGE) is scheduled at $0.30 per OKN, representing a +500% base price delta.",
       },
       {
         question: "How can I participate in the presale?",
-        answer: "You can participate directly by connecting your supported Web3 wallet (such as MetaMask, WalletConnect, or Coinbase Wallet) and acquiring OKN with ETH, USDT, or USDC on the Ethereum and Arbitrum networks.",
+        answer:
+          "You can participate directly by connecting your supported Web3 wallet (such as MetaMask, Trust Wallet, or Binance Web3 Wallet) and acquiring OKN with BNB, USDT, or BUSD on BNB Smart Chain.",
       },
       {
         question: "Is the OKN smart contract audited and verified?",
-        answer: "Yes. OKN smart contracts have undergone rigorous multi-phase security audits conducted by industry-leading security firms CertiK and SolidProof. Additionally, the project team is KYC-verified through AssureDeFi.",
+        answer:
+          "Yes. OKN smart contracts have undergone rigorous multi-phase security audits conducted by industry-leading security firms CertiK and SolidProof. Additionally, the project team is KYC-verified through AssureDeFi.",
       },
       {
         question: "What is the total supply and vesting schedule?",
-        answer: "The maximum total supply is capped at 1,000,000,000 OKN. The presale allocation represents 30% of the total supply, unlocked at TGE with structured 36-month vesting to protect token health and maintain stable ecosystem liquidity.",
+        answer:
+          "The maximum total supply is capped at 5,000,000,000 OKN on BNB Smart Chain. The presale allocation represents 30% of the total supply, unlocked with structured vesting to protect token health and maintain stable ecosystem liquidity.",
       },
       {
         question: "When will the Token Generation Event (TGE) occur?",
-        answer: "The Token Generation Event and public market listing are scheduled for Q3 2026, following the completion of the mainnet validation phase and tier-1 exchange liquidity setups.",
+        answer:
+          "The Token Generation Event and public market listing are scheduled for Q3 2026, following the completion of the mainnet validation phase and tier-1 exchange liquidity setups.",
       },
     ] as FaqItem[],
   },
@@ -480,7 +491,8 @@ export const siteContent = {
   finalCta: {
     headlineLine1: "Every Stage Brings",
     headlineLine2: "A Higher Price",
-    description: "The current $0.10 entry window is available for a limited time before the next scheduled increase.",
+    description:
+      "The current $0.05 entry window is available for a limited time before the next scheduled increase.",
     cta: "Join Presale",
     secondaryCta: "Read the Whitepaper",
   },
@@ -493,34 +505,5 @@ export const siteContent = {
       text: "KYC VERIFIED PROJECT",
       handle: "@AssureDeFi",
     },
-    sections: [
-      {
-        title: "Quick Links",
-        links: [
-          { name: "Home", href: "#hero" },
-          { name: "About", href: "#about" },
-          { name: "Tokenomics", href: "#tokenomics" },
-          { name: "Roadmap", href: "#roadmap" },
-        ],
-      },
-      {
-        title: "Ecosystem",
-        links: [
-          { name: "OKNexus Exchange", href: "https://exchange.oknexus.io" },
-          { name: "Wallet", href: "#ecosystem" },
-          { name: "Docs", href: "#docs" },
-          { name: "Blog", href: "#blog" },
-        ],
-      },
-      {
-        title: "Resources",
-        links: [
-          { name: "Whitepaper", href: "#whitepaper" },
-          { name: "Brand Kit", href: "#brand" },
-          { name: "Help Center", href: "#faq" },
-          { name: "Contact", href: "#contact" },
-        ],
-      },
-    ],
   },
 };

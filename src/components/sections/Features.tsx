@@ -118,7 +118,7 @@ export function Features() {
                       Price Stage Ladder
                     </span>
                     <span className="text-xs font-mono font-bold text-purple-700 dark:text-cyan-400 px-2 py-0.5 rounded-md bg-purple-500/10 dark:bg-cyan-500/10 border border-purple-500/20 dark:border-cyan-500/20">
-                      +200% Delta
+                      +500% Delta
                     </span>
                   </div>
 
@@ -131,7 +131,7 @@ export function Features() {
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                           Stage 1 (Current Entry)
                         </span>
-                        <span className="font-mono font-bold text-slate-900 dark:text-white">$0.10</span>
+                        <span className="font-mono font-bold text-slate-900 dark:text-white">$0.05</span>
                       </div>
                       <div className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-white/10 overflow-hidden">
                         <motion.div
@@ -148,7 +148,7 @@ export function Features() {
                     <div>
                       <div className="flex items-center justify-between text-xs mb-1">
                         <span className="text-slate-500 dark:text-slate-400">Stage 2 (Next Round)</span>
-                        <span className="font-mono font-bold text-slate-600 dark:text-slate-300">$0.148</span>
+                        <span className="font-mono font-bold text-slate-600 dark:text-slate-300">$0.08</span>
                       </div>
                       <div className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-white/10 overflow-hidden">
                         <motion.div
@@ -224,7 +224,7 @@ export function Features() {
                       {siteContent.about.stageCard.listingPrice}
                     </span>
                     <span className="text-xs text-emerald-600 dark:text-emerald-400 block font-semibold">
-                      +200% at Launch
+                      +500% at Launch
                     </span>
                   </div>
                 </div>

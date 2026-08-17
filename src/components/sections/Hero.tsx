@@ -256,7 +256,7 @@ export function Hero() {
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                  $0.10 ENTRY WINDOW
+                  $0.05 ENTRY WINDOW
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold border border-emerald-200 dark:border-emerald-500/30">
                   Live Stage
@@ -269,7 +269,7 @@ export function Hero() {
                   Current Entry
                 </span>
                 <div className="text-xl font-heading font-black text-slate-900 dark:text-white leading-tight">
-                  $0.10{" "}
+                  $0.05{" "}
                   <span className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-300 bg-clip-text text-transparent">
                     ENTRY WINDOW
                   </span>
@@ -280,7 +280,7 @@ export function Hero() {
               <div className="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 mb-4 text-center">
                 <div className="flex flex-col">
                   <span className="text-base font-mono font-black text-slate-900 dark:text-white">
-                    $0.10
+                    $0.05
                   </span>
                   <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight">
                     Current stage
@@ -289,7 +289,7 @@ export function Hero() {
 
                 <div className="flex flex-col border-x border-slate-200 dark:border-white/15">
                   <span className="text-base font-mono font-black text-slate-900 dark:text-white">
-                    $0.148
+                    $0.08
                   </span>
                   <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight">
                     Next stage
@@ -301,7 +301,7 @@ export function Hero() {
                     +$0.30
                   </span>
                   <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 leading-tight">
-                    +200% Gain
+                    +500% Gain
                   </span>
                 </div>
               </div>
