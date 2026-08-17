@@ -5,6 +5,7 @@ import { Features } from "@/components/sections/Features";
 import { ComparisonTable } from "@/components/sections/ComparisonTable";
 import { Ecosystem } from "@/components/sections/Ecosystem";
 import { Utility } from "@/components/sections/Utility";
+import { VideoSection } from "@/components/sections/VideoSection";
 import { Tokenomics } from "@/components/sections/Tokenomics";
 import { Roadmap } from "@/components/sections/Roadmap";
 import { Community } from "@/components/sections/Community";
@@ -38,6 +39,9 @@ export default function HomePage() {
 
         {/* 06. Token Utility Dark Transition Section */}
         <Utility />
+
+        {/* Video Explainer Section */}
+        <VideoSection />
 
         {/* 07. Transparent Tokenomics & Allocation Graphic */}
         <Tokenomics />
