@@ -17,13 +17,13 @@ export function TokenomicsChart({
 }: TokenomicsChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Enlarged chart dimensions to fill empty spaces
-  const size = 460;
+  // Large, prominent chart dimensions with expansive inner hole to prevent text overlap
+  const size = 560;
   const center = size / 2;
-  const outerRadius = 185;
-  const innerRadius = 120;
-  const activeOuterRadius = 202;
-  const activeInnerRadius = 112;
+  const outerRadius = 235;
+  const innerRadius = 158;
+  const activeOuterRadius = 255;
+  const activeInnerRadius = 150;
 
   // Compute slice angles
   let currentAngle = -90; // Start at top
@@ -75,10 +75,10 @@ export function TokenomicsChart({
   const currentDisplay = activeAllocation || allocations[0];
 
   return (
-    <div className="relative w-full max-w-[460px] sm:max-w-[490px] aspect-square flex items-center justify-center select-none">
+    <div className="relative w-full max-w-[540px] sm:max-w-[580px] lg:max-w-[620px] aspect-square flex items-center justify-center select-none">
       {/* Background Ambient Glow */}
       <div
-        className="absolute inset-2 rounded-full blur-3xl opacity-45 dark:opacity-55 transition-colors duration-500 pointer-events-none"
+        className="absolute inset-4 rounded-full blur-3xl opacity-40 dark:opacity-50 transition-colors duration-500 pointer-events-none"
         style={{
           backgroundColor: currentDisplay.color,
         }}
@@ -87,7 +87,7 @@ export function TokenomicsChart({
       {/* SVG Chart */}
       <svg
         viewBox={`0 0 ${size} ${size}`}
-        className="w-full h-full transform drop-shadow-[0_20px_40px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)]"
+        className="w-full h-full transform drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_25px_60px_rgba(0,0,0,0.7)]"
       >
         <defs>
           {allocations.map((item, idx) => (
@@ -124,7 +124,7 @@ export function TokenomicsChart({
                 stiffness: 300,
                 damping: 20,
               }}
-              className="cursor-pointer transition-all duration-300 stroke-white/90 dark:stroke-[#090C16] stroke-[2.5px] hover:brightness-115"
+              className="cursor-pointer transition-all duration-300 stroke-white/90 dark:stroke-[#090C16] stroke-[3px] hover:brightness-115"
               onMouseEnter={() => {
                 setHoveredIndex(slice.index);
                 onSelectAllocation(slice);
@@ -139,13 +139,13 @@ export function TokenomicsChart({
         <circle
           cx={center}
           cy={center}
-          r={innerRadius - 10}
+          r={innerRadius - 8}
           className="fill-white/95 dark:fill-[#0A0C16] transition-colors duration-300 shadow-inner"
         />
       </svg>
 
-      {/* Interactive Center Content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-10">
+      {/* Interactive Center Content with Guaranteed No Overlap */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center p-6 sm:p-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentDisplay.name}
@@ -153,19 +153,31 @@ export function TokenomicsChart({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -6 }}
             transition={{ duration: 0.25 }}
-            className="flex flex-col items-center max-w-[200px]"
+            className="flex flex-col items-center justify-center max-w-[260px] sm:max-w-[290px] w-full"
           >
-            <span
-              className="w-3 h-3 rounded-full mb-2 shadow-xs"
-              style={{ backgroundColor: currentDisplay.color }}
-            />
-            <span className="text-4xl sm:text-5xl font-mono font-black text-slate-950 dark:text-white tracking-tight leading-none">
+            {/* Active Color Pill Indicator */}
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <span
+                className="w-2.5 h-2.5 rounded-full shadow-xs"
+                style={{ backgroundColor: currentDisplay.color }}
+              />
+              <span className="text-[11px] uppercase tracking-wider font-mono font-bold text-slate-500 dark:text-slate-400">
+                Allocation
+              </span>
+            </div>
+
+            {/* Large Percentage */}
+            <span className="text-5xl sm:text-6xl font-mono font-black text-slate-950 dark:text-white tracking-tight leading-none my-1">
               {currentDisplay.percentage}%
             </span>
-            <span className="text-sm sm:text-base font-heading font-extrabold text-slate-900 dark:text-slate-100 mt-1.5 line-clamp-1">
+
+            {/* Title with wrapping and no overflow */}
+            <span className="text-base sm:text-lg font-heading font-black text-slate-900 dark:text-slate-100 leading-snug px-1 line-clamp-2 mt-1">
               {currentDisplay.name}
             </span>
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-1 font-semibold">
+
+            {/* Token Counter */}
+            <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-mono mt-1 font-bold">
               {(currentDisplay.percentage * 50_000_000).toLocaleString()} OKN
             </span>
           </motion.div>
