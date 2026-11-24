@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 
@@ -11,6 +11,12 @@ const inter = Inter({
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-heading",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
 });
@@ -31,6 +37,7 @@ export const metadata: Metadata = {
     "Crypto Presale",
     "Layer 1",
   ],
+  manifest: "/site.webmanifest",
   authors: [{ name: "OKNexus Ecosystem" }],
   openGraph: {
     title: "OKN Token | Powering the OKNexus Ecosystem",
@@ -40,10 +47,10 @@ export const metadata: Metadata = {
     siteName: "OKN Token",
     images: [
       {
-        url: "/brand/OKN_coin_transparent_padded.png",
-        width: 961,
-        height: 1009,
-        alt: "OKN Token 3D Coin",
+        url: "/brand/og-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "OKN Token — Powering the OKNexus Ecosystem",
       },
     ],
     locale: "en_US",
@@ -54,8 +61,8 @@ export const metadata: Metadata = {
     title: "OKN Token | Powering the OKNexus Ecosystem",
     description:
       "OKN Token powers a secure, transparent, and AI-powered ecosystem built for the next generation of digital finance.",
-    creator: "@OkNexusExchange",
-    images: ["/brand/OKN_coin_transparent_padded.png"],
+    creator: "@OkNexusEco",
+    images: ["/brand/og-banner.jpg"],
   },
   icons: {
     icon: [
@@ -77,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${plusJakarta.variable} scroll-smooth`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} scroll-smooth`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon.png" />
@@ -87,8 +94,7 @@ export default function RootLayout({
             __html: `
               try {
                 const theme = localStorage.getItem('okn-theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (theme === 'dark' || (!theme && prefersDark)) {
+                if (theme === 'dark') {
                   document.documentElement.classList.add('dark');
                 } else {
                   document.documentElement.classList.remove('dark');
@@ -97,19 +103,9 @@ export default function RootLayout({
             `,
           }}
         />
-        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              function googleTranslateElementInit() {
-                new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
-              }
-            `,
-          }}
-        />
       </head>
-      <body className="min-h-screen bg-[#F8F9FE] dark:bg-[#06070B] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-purple-500/20 selection:text-purple-900 transition-colors duration-500">
-        <div id="google_translate_element" style={{ display: 'none' }}></div>
+      <body className="min-h-screen bg-white dark:bg-[#06070B] text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-purple-500/20 selection:text-purple-900 transition-colors duration-300">
+        <div id="google_translate_element" className="hidden" />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

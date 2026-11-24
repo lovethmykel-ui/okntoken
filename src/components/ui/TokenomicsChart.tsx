@@ -1,8 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { AnimatePresence, motion, useSpring } from "framer-motion";
 import { TokenAllocation } from "@/data/siteContent";
+import {
+  clampTooltipPosition,
+  computeDonutSlices,
+  createArcPath,
+  getCoordinatesForAngle,
+  splitSliceTitle,
+} from "@/lib/tokenomicsMath";
 
 interface TokenomicsChartProps {
   allocations: TokenAllocation[];
@@ -10,193 +17,158 @@ interface TokenomicsChartProps {
   onSelectAllocation: (item: TokenAllocation) => void;
 }
 
-function splitTitle(title: string): string[] {
-  if (title.length <= 16) return [title];
-  if (title.includes(" (")) {
-    const parts = title.split(" (");
-    return [parts[0], `(${parts[1]}`];
-  }
-  if (title.includes(" & ")) {
-    const parts = title.split(" & ");
-    return [`${parts[0]} &`, parts[1]];
-  }
-  const words = title.split(" ");
-  if (words.length >= 2) {
-    const mid = Math.ceil(words.length / 2);
-    return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
-  }
-  return [title];
-}
+const TGE_SHARES: Record<string, string> = {
+  "Community Rewards": "On-chain emissions",
+  "Public Sale": "15% at TGE",
+  "DEX Liquidity": "100% locked",
+  "Team & Advisors": "0% at TGE",
+  Ecosystem: "0% at TGE",
+  Treasury: "0% at TGE",
+};
 
 export function TokenomicsChart({
   allocations,
   activeAllocation,
   onSelectAllocation,
 }: TokenomicsChartProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Large SVG coordinate canvas (560x560) with spacious inner hole (340px diameter)
-  const size = 560;
+  const springX = useSpring(0, { stiffness: 360, damping: 28, mass: 0.4 });
+  const springY = useSpring(0, { stiffness: 360, damping: 28, mass: 0.4 });
+
+  const size = 440;
   const center = size / 2;
-  const outerRadius = 240;
-  const innerRadius = 168;
-  const activeOuterRadius = 258;
-  const activeInnerRadius = 160;
+  const outerRadius = 196;
+  const innerRadius = 120;
+  const activeOuterRadius = 208;
+  const activeInnerRadius = 115;
 
-  // Compute slice angles
-  let currentAngle = -90; // Start at top
-  const slices = allocations.map((item, index) => {
-    const angle = (item.percentage / 100) * 360;
-    const startAngle = currentAngle;
-    const endAngle = currentAngle + angle;
-    currentAngle += angle;
+  const slices = computeDonutSlices(allocations).map((s) => ({
+    ...s.item,
+    index: s.index,
+    startAngle: s.startAngle,
+    endAngle: s.endAngle,
+  }));
 
-    return {
-      ...item,
-      index,
-      startAngle,
-      endAngle,
-    };
-  });
-
-  const getCoordinatesForAngle = (angleInDegrees: number, radius: number) => {
-    const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
-    return {
-      x: center + radius * Math.cos(angleInRadians),
-      y: center + radius * Math.sin(angleInRadians),
-    };
+  const updateTooltipFromCoords = (clientX: number, clientY: number, immediate = false) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const pos = clampTooltipPosition(
+      clientX - rect.left,
+      clientY - rect.top,
+      rect.width,
+      rect.height,
+      256,
+      186
+    );
+    if (immediate) {
+      springX.jump(pos.x);
+      springY.jump(pos.y);
+    } else {
+      springX.set(pos.x);
+      springY.set(pos.y);
+    }
   };
 
-  const createArcPath = (
-    startAngle: number,
-    endAngle: number,
-    iRadius: number,
-    oRadius: number
-  ) => {
-    const adjustedEnd = endAngle - startAngle >= 360 ? startAngle + 359.99 : endAngle;
-    const largeArcFlag = adjustedEnd - startAngle <= 180 ? "0" : "1";
-
-    const outerStart = getCoordinatesForAngle(startAngle, oRadius);
-    const outerEnd = getCoordinatesForAngle(adjustedEnd, oRadius);
-    const innerStart = getCoordinatesForAngle(adjustedEnd, iRadius);
-    const innerEnd = getCoordinatesForAngle(startAngle, iRadius);
-
-    return [
-      `M ${outerStart.x} ${outerStart.y}`,
-      `A ${oRadius} ${oRadius} 0 ${largeArcFlag} 1 ${outerEnd.x} ${outerEnd.y}`,
-      `L ${innerStart.x} ${innerStart.y}`,
-      `A ${iRadius} ${iRadius} 0 ${largeArcFlag} 0 ${innerEnd.x} ${innerEnd.y}`,
-      "Z",
-    ].join(" ");
+  const anchorTooltipToSlice = (slice: (typeof slices)[number]) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const midAngle = (slice.startAngle + slice.endAngle) / 2;
+    const midCoord = getCoordinatesForAngle(center, midAngle, (outerRadius + innerRadius) / 2);
+    const pos = clampTooltipPosition(
+      (midCoord.x / size) * rect.width,
+      (midCoord.y / size) * rect.height,
+      rect.width,
+      rect.height,
+      256,
+      186
+    );
+    springX.jump(pos.x);
+    springY.jump(pos.y);
   };
 
-  const currentDisplay = activeAllocation || allocations[0];
-  const nameLines = splitTitle(currentDisplay.name);
+  const hoveredSlice = hoveredIndex !== null ? slices[hoveredIndex] : null;
+  const currentDisplay = hoveredSlice || activeAllocation || allocations[0];
+  const nameLines = splitSliceTitle(currentDisplay.name);
 
   return (
-    <div className="relative w-full max-w-[500px] sm:max-w-[560px] lg:max-w-[600px] aspect-square flex items-center justify-center select-none">
-      {/* Background Ambient Glow */}
-      <div
-        className="absolute inset-6 rounded-full blur-3xl opacity-40 dark:opacity-50 transition-colors duration-500 pointer-events-none"
-        style={{
-          backgroundColor: currentDisplay.color,
-        }}
-      />
-
-      {/* SVG Chart with Native Vector Slices AND Native Vector Typography */}
-      <svg
-        viewBox={`0 0 ${size} ${size}`}
-        className="w-full h-full transform drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_25px_60px_rgba(0,0,0,0.7)]"
-      >
-        <defs>
-          {allocations.map((item, idx) => (
-            <filter key={`glow-${idx}`} id={`glow-${idx}`} x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor={item.color} floodOpacity="0.5" />
-            </filter>
-          ))}
-        </defs>
-
-        {/* Donut Slices */}
+    <div
+      ref={containerRef}
+      onMouseMove={(e) => {
+        if (hoveredIndex !== null) {
+          updateTooltipFromCoords(e.clientX, e.clientY);
+        }
+      }}
+      onMouseLeave={() => setHoveredIndex(null)}
+      className="relative w-full max-w-[380px] sm:max-w-[400px] aspect-square flex items-center justify-center select-none"
+    >
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full overflow-visible">
         {slices.map((slice) => {
           const isActive =
             hoveredIndex === slice.index ||
-            (!hoveredIndex && activeAllocation?.name === slice.name);
+            (hoveredIndex === null && activeAllocation?.name === slice.name);
           const oRad = isActive ? activeOuterRadius : outerRadius;
           const iRad = isActive ? activeInnerRadius : innerRadius;
-          const path = createArcPath(slice.startAngle, slice.endAngle, iRad, oRad);
+          const path = createArcPath(center, slice.startAngle, slice.endAngle, iRad, oRad);
 
           return (
             <motion.path
               key={slice.name}
               d={path}
               fill={slice.color}
-              initial={{ opacity: 0, scale: 0.85 }}
+              tabIndex={0}
+              role="button"
+              aria-label={`${slice.name}: ${slice.percentage}% (${slice.tokens})`}
+              initial={{ opacity: 0.9 }}
               animate={{
-                opacity: 1,
-                scale: 1,
-                filter: isActive ? `url(#glow-${slice.index})` : "none",
+                opacity: hoveredIndex === null || isActive ? 1 : 0.45,
               }}
-              transition={{
-                duration: 0.4,
-                delay: slice.index * 0.03,
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-              }}
-              className="cursor-pointer transition-all duration-300 stroke-white/95 dark:stroke-[#090C16] stroke-[3px] hover:brightness-115"
-              onMouseEnter={() => {
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="cursor-pointer stroke-[#FAF9FF] dark:stroke-[#0B0E17] stroke-[3px] focus:outline-none"
+              onMouseEnter={(e) => {
+                const isFirstHover = hoveredIndex === null;
                 setHoveredIndex(slice.index);
                 onSelectAllocation(slice);
+                updateTooltipFromCoords(e.clientX, e.clientY, isFirstHover);
               }}
-              onMouseLeave={() => setHoveredIndex(null)}
+              onFocus={() => {
+                setHoveredIndex(slice.index);
+                onSelectAllocation(slice);
+                anchorTooltipToSlice(slice);
+              }}
+              onBlur={() => setHoveredIndex(null)}
               onClick={() => onSelectAllocation(slice)}
             />
           );
         })}
 
-        {/* Inner Circle Backdrop Vessel */}
+        {/* Clean Inner Hole Matching Surface */}
         <circle
           cx={center}
           cy={center}
-          r={innerRadius - 6}
-          className="fill-white/98 dark:fill-[#080A12] stroke-purple-200/40 dark:stroke-white/10 stroke-[2px] transition-colors duration-300 shadow-inner"
+          r={innerRadius - 4}
+          className="fill-[#FAF9FF] dark:fill-[#0B0E17] transition-colors duration-300 pointer-events-none"
         />
 
-        {/* Native Vector Typography - Scales 1:1 with SVG without any possibility of text overflow */}
-        <g className="transition-all duration-300">
-          {/* Top Tag: Pill Dot + Allocation Label */}
-          <circle
-            cx={center - 48}
-            cy={center - 68}
-            r={5}
-            fill={currentDisplay.color}
-          />
-          <text
-            x={center - 36}
-            y={center - 64}
-            textAnchor="start"
-            className="fill-slate-500 dark:fill-slate-400 font-mono text-[13px] font-bold uppercase tracking-wider"
-          >
-            ALLOCATION
-          </text>
-
-          {/* Big Center Percentage */}
+        <g className="pointer-events-none">
           <text
             x={center}
-            y={center - 4}
+            y={center - 16}
             textAnchor="middle"
-            className="fill-slate-950 dark:fill-white font-mono text-[62px] font-black tracking-tight"
+            className="fill-[#0F172A] dark:fill-white font-mono tabular-nums text-[42px] font-semibold tracking-tight"
           >
             {currentDisplay.percentage}%
           </text>
 
-          {/* Allocation Title (1 or 2 lines centered within the 336px hole) */}
           {nameLines.length === 1 ? (
             <text
               x={center}
-              y={center + 38}
+              y={center + 16}
               textAnchor="middle"
-              className="fill-slate-900 dark:fill-slate-100 font-sans text-[21px] font-bold tracking-tight"
+              className="fill-[#0F172A] dark:fill-slate-200 text-[15px] font-medium"
             >
               {nameLines[0]}
             </text>
@@ -204,34 +176,104 @@ export function TokenomicsChart({
             <>
               <text
                 x={center}
-                y={center + 30}
+                y={center + 12}
                 textAnchor="middle"
-                className="fill-slate-900 dark:fill-slate-100 font-sans text-[19px] font-bold tracking-tight"
+                className="fill-[#0F172A] dark:fill-slate-200 text-[14px] font-medium"
               >
                 {nameLines[0]}
               </text>
               <text
                 x={center}
-                y={center + 54}
+                y={center + 30}
                 textAnchor="middle"
-                className="fill-slate-900 dark:fill-slate-100 font-sans text-[19px] font-bold tracking-tight"
+                className="fill-[#0F172A] dark:fill-slate-200 text-[14px] font-medium"
               >
                 {nameLines[1]}
               </text>
             </>
           )}
 
-          {/* Token Counter */}
           <text
             x={center}
-            y={nameLines.length === 1 ? center + 68 : center + 82}
+            y={nameLines.length === 1 ? center + 40 : center + 52}
             textAnchor="middle"
-            className="fill-slate-500 dark:fill-slate-400 font-mono text-[14px] font-semibold"
+            className="fill-[#64748B] dark:fill-slate-400 font-mono text-[11px]"
           >
             {(currentDisplay.percentage * 50_000_000).toLocaleString()} OKN
           </text>
         </g>
       </svg>
+
+      {/* Custom Animated Floating Slice Tooltip */}
+      <AnimatePresence>
+        {hoveredSlice && (
+          <motion.div
+            key={hoveredSlice.name}
+            style={{
+              left: springX,
+              top: springY,
+            }}
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-none absolute z-30 w-[256px] p-4 rounded-xl border border-[#EAE7F4] dark:border-white/15 bg-white/96 dark:bg-[#111522]/96 backdrop-blur-md shadow-[0_18px_48px_rgba(15,23,42,0.12)] dark:shadow-[0_18px_50px_rgba(0,0,0,0.65)] text-left"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-[#E8E8E8]/80 dark:border-white/10">
+              <div className="flex items-center gap-2 min-w-0">
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{ backgroundColor: hoveredSlice.color }}
+                />
+                <span className="text-sm font-medium tracking-[-0.02em] text-[#0F172A] dark:text-white truncate">
+                  {hoveredSlice.name}
+                </span>
+              </div>
+              <span className="font-mono tabular-nums text-xs font-semibold px-2 py-0.5 rounded-full bg-[#F4F0FF] dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 shrink-0">
+                {hoveredSlice.percentage}%
+              </span>
+            </div>
+
+            {/* Detailed Allocation Breakdown */}
+            <div className="space-y-2 text-xs">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[#64748B] dark:text-slate-400">Allocation</span>
+                <span className="font-mono tabular-nums font-medium text-[#0F172A] dark:text-white">
+                  {hoveredSlice.tokens}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[#64748B] dark:text-slate-400">TGE Release</span>
+                <span className="font-mono tabular-nums font-medium text-[#0F172A] dark:text-slate-200">
+                  {TGE_SHARES[hoveredSlice.name] ?? "Structured"}
+                </span>
+              </div>
+
+              <div className="pt-1">
+                <span className="block text-[11px] text-[#64748B] dark:text-slate-400 mb-0.5">
+                  Unlock Schedule
+                </span>
+                <p className="text-[11.5px] leading-[1.4] text-[#334155] dark:text-slate-300">
+                  {hoveredSlice.vesting}
+                </p>
+              </div>
+            </div>
+
+            {/* Visual Share Bar */}
+            <div className="mt-3 w-full h-1 rounded-full bg-slate-100 dark:bg-white/10 overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${hoveredSlice.percentage}%` }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="h-full rounded-full"
+                style={{ backgroundColor: hoveredSlice.color }}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

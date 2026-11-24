@@ -14,21 +14,15 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("light");
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Check localStorage or system preference
-    const savedTheme = localStorage.getItem("okn-theme") as Theme | null;
-    if (savedTheme) {
-      setThemeState(savedTheme);
-      document.documentElement.classList.toggle("dark", savedTheme === "dark");
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initialTheme = prefersDark ? "dark" : "light";
+    const frame = requestAnimationFrame(() => {
+      const savedTheme = localStorage.getItem("okn-theme") as Theme | null;
+      const initialTheme: Theme = savedTheme === "dark" ? "dark" : "light";
       setThemeState(initialTheme);
-      document.documentElement.classList.toggle("dark", prefersDark);
-    }
-    setMounted(true);
+      document.documentElement.classList.toggle("dark", initialTheme === "dark");
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const setTheme = (newTheme: Theme) => {

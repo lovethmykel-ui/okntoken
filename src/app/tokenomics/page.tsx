@@ -151,10 +151,10 @@ export default function TokenomicsPage() {
               <div className="p-6 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200/80 dark:border-white/10">
                 <ShieldCheck className="w-6 h-6 text-purple-600 dark:text-purple-400 mb-3" />
                 <h3 className="font-heading text-base font-bold text-slate-900 dark:text-white mb-1.5">
-                  CertiK Audited Security
+                  AssureDeFi KYC &amp; BSC Verified
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Verified open-source smart contracts with automated liquidity lock enforcement and no hidden minting backdoors.
+                  Verified open-source Binance Smart Chain smart contracts with AssureDeFi KYC verification, automated liquidity lock enforcement, and no hidden minting backdoors.
                 </p>
               </div>
 

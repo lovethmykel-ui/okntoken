@@ -30,9 +30,9 @@ export default function DocumentsPage() {
 
   const roadmapPoints = [
     "Phase-by-phase delivery timeline (Ignition to Expansion)",
-    "Community mission targets (100k+ holders and beyond)",
+    "Community mission targets (28K+ Telegram community & global holders)",
     "Staking and AI Trading Agent release windows",
-    "Tier-1 exchange listing milestones",
+    "CoinSniper tracking and Tier-1 exchange listing milestones",
   ];
 
   return (
@@ -168,10 +168,10 @@ export default function DocumentsPage() {
                   <ShieldCheck className="w-5 h-5" />
                 </div>
                 <h3 className="font-heading text-lg font-bold text-slate-900 dark:text-white mb-2">
-                  Audited Contracts
+                  KYC &amp; Contract Verified
                 </h3>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  Smart contracts adhere to OpenZeppelin upgradeable standards with a UUPS proxy and CertiK/SolidProof verification.
+                  Smart contracts adhere to OpenZeppelin upgradeable standards on Binance Smart Chain with AssureDeFi KYC and BscScan verification.
                 </p>
               </div>
 
@@ -214,7 +214,7 @@ export default function DocumentsPage() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <a
-                href="https://t.me/OkNexusExchange"
+                href="https://t.me/oknexus_eco"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-purple-600/30 hover:scale-[1.02] transition-transform"
@@ -223,7 +223,7 @@ export default function DocumentsPage() {
                 <span>Join Telegram Community</span>
               </a>
               <a
-                href="https://www.youtube.com/@OkNexusExchange"
+                href="https://www.youtube.com/@Oknexusexchange2022"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-white/10 border border-white/15 text-white font-bold text-sm hover:bg-white/20 transition-colors"

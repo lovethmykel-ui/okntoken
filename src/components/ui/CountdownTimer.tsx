@@ -49,7 +49,7 @@ export function CountdownTimer({
 
   if (theme === "compact") {
     return (
-      <div className={`inline-flex items-center gap-1.5 font-mono text-sm font-semibold tracking-wide ${className}`}>
+      <div className={`inline-flex items-center gap-1.5 font-mono tabular-nums text-sm font-semibold tracking-wide ${className}`}>
         <span>{formatNumber(timeLeft.days)}d</span>
         <span>:</span>
         <span>{formatNumber(timeLeft.hours)}h</span>
@@ -61,11 +61,13 @@ export function CountdownTimer({
     );
   }
 
+  const isDarkTheme = theme === "dark";
+
   const items = [
-    { label: "DAYS", value: formatNumber(timeLeft.days), isSec: false },
-    { label: "HOURS", value: formatNumber(timeLeft.hours), isSec: false },
-    { label: "MINS", value: formatNumber(timeLeft.minutes), isSec: false },
-    { label: "SECS", value: formatNumber(timeLeft.seconds), isSec: true },
+    { label: "Days", value: formatNumber(timeLeft.days), isSec: false },
+    { label: "Hours", value: formatNumber(timeLeft.hours), isSec: false },
+    { label: "Mins", value: formatNumber(timeLeft.minutes), isSec: false },
+    { label: "Secs", value: formatNumber(timeLeft.seconds), isSec: true },
   ];
 
   return (
@@ -73,17 +75,25 @@ export function CountdownTimer({
       {items.map((item) => (
         <div key={item.label} className="flex flex-col items-center min-w-0">
           <div
-            className={`w-full py-2.5 sm:py-3 rounded-2xl flex items-center justify-center font-mono text-base sm:text-xl font-black tracking-tight border transition-colors shadow-2xs ${
-              item.isSec
-                ? "bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-300 border-purple-200 dark:border-purple-500/30"
-                : "bg-slate-100/90 dark:bg-white/5 text-slate-900 dark:text-white border-slate-200/80 dark:border-white/10"
+            className={`w-full py-2.5 rounded-xl flex items-center justify-center font-mono tabular-nums text-base sm:text-lg font-bold tracking-tight border transition-colors ${
+              isDarkTheme
+                ? item.isSec
+                  ? "bg-purple-500/15 text-purple-300 border-purple-400/30"
+                  : "bg-white/[0.04] text-white border-white/10"
+                : item.isSec
+                ? "bg-purple-50 dark:bg-purple-950/35 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-500/30"
+                : "bg-slate-50 dark:bg-white/[0.03] text-slate-950 dark:text-white border-slate-200/90 dark:border-white/10"
             }`}
           >
             {item.value}
           </div>
           <span
-            className={`text-[10px] uppercase tracking-wider font-bold mt-1.5 truncate ${
-              item.isSec
+            className={`text-[11px] font-medium mt-1.5 ${
+              isDarkTheme
+                ? item.isSec
+                  ? "text-purple-300"
+                  : "text-slate-400"
+                : item.isSec
                 ? "text-purple-600 dark:text-purple-400"
                 : "text-slate-500 dark:text-slate-400"
             }`}

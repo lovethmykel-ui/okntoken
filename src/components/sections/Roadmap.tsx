@@ -1,134 +1,159 @@
 "use client";
 
-import React, { useRef } from "react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { siteContent, RoadmapMilestone } from "@/data/siteContent";
-import { CheckCircle2, Circle, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import React, { useState } from "react";
+import { siteContent } from "@/data/siteContent";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 
 export function Roadmap() {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(1); // Highlight current In Progress phase
+  const milestones = siteContent.roadmap.milestones;
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 360;
-      scrollContainerRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
+  const handlePrev = () => {
+    setActiveIndex((prev) => Math.max(0, prev - 1));
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "Completed":
-        return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-500/30 backdrop-blur-md">
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            Completed
-          </span>
-        );
-      case "In Progress":
-        return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/15 text-purple-700 dark:text-purple-300 text-xs font-bold border border-purple-500/30 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-purple-600 dark:bg-purple-400 animate-pulse" />
-            In Progress
-          </span>
-        );
-      case "Upcoming":
-      default:
-        return (
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-500/10 text-slate-600 dark:text-slate-400 text-xs font-medium border border-slate-500/20 backdrop-blur-md">
-            <Circle className="w-3.5 h-3.5" />
-            Upcoming
-          </span>
-        );
-    }
+  const handleNext = () => {
+    setActiveIndex((prev) => Math.min(milestones.length - 1, prev + 1));
   };
 
   return (
     <section
       id="roadmap"
-      className="py-24 bg-white dark:bg-[#06070B] relative overflow-hidden scroll-mt-24 transition-colors duration-500"
+      className="pt-4 pb-20 lg:pb-28 bg-white dark:bg-[#06070B] text-[#0F172A] dark:text-white tracking-[-0.045em] overflow-x-hidden transition-colors duration-300 scroll-mt-24"
     >
-      {/* Background ambient lighting mesh for refraction */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/15 dark:bg-purple-600/25 rounded-full blur-[140px] pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <SectionHeading
-            eyebrow={siteContent.roadmap.eyebrow}
-            title={siteContent.roadmap.headline}
-            description={siteContent.roadmap.description}
-          />
-
-          {/* Liquid Glass Carousel Arrows */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => scroll("left")}
-              aria-label="Scroll roadmap left"
-              className="w-12 h-12 rounded-full glass-light flex items-center justify-center text-slate-700 dark:text-slate-200 hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-300 hover:scale-105 transition-all shadow-md active:scale-95"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              aria-label="Scroll roadmap right"
-              className="w-12 h-12 rounded-full glass-light flex items-center justify-center text-slate-700 dark:text-slate-200 hover:border-purple-400 hover:text-purple-600 dark:hover:text-purple-300 hover:scale-105 transition-all shadow-md active:scale-95"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+      <div className="max-w-[1380px] mx-auto px-4">
+        {/* Centered Header */}
+        <div className="text-center mb-12 sm:mb-14">
+          <h2 className="text-4xl sm:text-5xl font-medium leading-[1.1] tracking-[-0.045em] mb-5 text-balance">
+            OKN{" "}
+            <span className="text-[#94A3B8] dark:text-slate-500">roadmap</span>
+          </h2>
+          <p className="max-w-[440px] mx-auto text-sm sm:text-base leading-[1.45] tracking-[-0.03em] text-[#0F172A] dark:text-slate-300">
+            Built on milestones,{" "}
+            <span className="text-[#94A3B8] dark:text-slate-500">
+              engineered to deliver real infrastructure, verified security, and global liquidity.
+            </span>
+          </p>
         </div>
 
-        {/* Horizontal Scrollable Timeline Rail */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto pb-8 pt-4 no-scrollbar scroll-smooth snap-x snap-mandatory"
-        >
-          {siteContent.roadmap.milestones.map((milestone: RoadmapMilestone, idx: number) => (
-            <div
-              key={idx}
-              className="snap-start shrink-0 w-[320px] sm:w-[360px] p-8 rounded-3xl glass-light hover:-translate-y-1 hover:shadow-2xl hover:border-purple-400/80 transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <span className="font-mono text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                    {milestone.quarter} • {milestone.year}
-                  </span>
-                  {getStatusBadge(milestone.status)}
+        {/* Continuous Horizontal Milestone Track Line (Desktop) */}
+        <div className="relative hidden lg:grid grid-cols-4 gap-[18px] mb-10 items-center">
+          <div
+            aria-hidden="true"
+            className="absolute top-1/2 -left-[50vw] -right-[50vw] h-[2px] -translate-y-1/2 bg-[#0F172A] dark:bg-white/30"
+          />
+          {milestones.map((m, idx) => {
+            const isActive = activeIndex === idx;
+            const isCompleted = m.status === "Completed";
+            const isInProgress = m.status === "In Progress";
+
+            return (
+              <div key={m.quarter} className="relative z-10 flex justify-start pl-6">
+                <button
+                  type="button"
+                  onClick={() => setActiveIndex(idx)}
+                  aria-label={`Select ${m.quarter}`}
+                  className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors ${
+                    isCompleted
+                      ? "bg-purple-600 border-purple-600 text-white"
+                      : isInProgress || isActive
+                      ? "bg-[#F4F0FF] dark:bg-purple-500/30 border-[#0F172A] dark:border-purple-400 text-[#0F172A] dark:text-white"
+                      : "bg-white dark:bg-[#06070B] border-[#0F172A] dark:border-white/40"
+                  }`}
+                >
+                  {isCompleted && <Check className="w-3 h-3" />}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Phase Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[18px]">
+          {milestones.map((milestone, idx) => {
+            const isSelected = activeIndex === idx;
+            const isInProgress = milestone.status === "In Progress";
+
+            return (
+              <div
+                key={milestone.quarter}
+                onClick={() => setActiveIndex(idx)}
+                className={`p-6 sm:p-7 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-6 ${
+                  isInProgress || isSelected
+                    ? "bg-gradient-to-b from-[#F5F1FF] to-white dark:from-purple-500/10 dark:to-purple-500/5 border-purple-300 dark:border-purple-400/40 shadow-[0_16px_40px_rgba(124,58,237,0.1)] dark:shadow-none"
+                    : "bg-white dark:bg-[#0B0E17] border-[#EAE7F4] dark:border-white/10 shadow-[0_8px_24px_rgba(15,23,42,0.04)] dark:shadow-none hover:border-purple-300/70 hover:shadow-[0_12px_30px_rgba(124,58,237,0.08)]"
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2 mb-5">
+                    <span className="font-mono text-xs font-medium tracking-normal text-[#64748B] dark:text-slate-400">
+                      {milestone.quarter} · {milestone.year}
+                    </span>
+                    <span
+                      className={`font-mono text-[11px] font-semibold uppercase tracking-[0.06em] ${
+                        milestone.status === "Completed"
+                          ? "text-emerald-700 dark:text-emerald-400"
+                          : milestone.status === "In Progress"
+                          ? "text-purple-700 dark:text-purple-300"
+                          : "text-[#64748B] dark:text-slate-500"
+                      }`}
+                    >
+                      {milestone.status}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-medium tracking-[-0.03em] text-[#0F172A] dark:text-white mb-4">
+                    {milestone.title}
+                  </h3>
+
+                  <ul className="space-y-2.5 tracking-[-0.02em]">
+                    {milestone.points.map((pt) => (
+                      <li
+                        key={pt}
+                        className="flex items-start gap-2.5 text-xs sm:text-sm text-[#475569] dark:text-slate-300 leading-[1.45]"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={`mt-2 w-1.5 h-1.5 rounded-full shrink-0 ${
+                            milestone.status === "Completed" || milestone.status === "In Progress"
+                              ? "bg-purple-600 dark:bg-purple-400"
+                              : "bg-slate-300 dark:bg-slate-600"
+                          }`}
+                        />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <h3 className="font-heading text-xl font-bold text-slate-900 dark:text-white mb-6 group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors">
-                  {milestone.title}
-                </h3>
-
-                <ul className="space-y-3.5 mb-6">
-                  {milestone.points.map((pt: string, pIdx: number) => (
-                    <li
-                      key={pIdx}
-                      className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
-                    >
-                      <CheckCircle2
-                        className={`w-4 h-4 shrink-0 mt-0.5 ${
-                          milestone.status === "Completed"
-                            ? "text-emerald-500"
-                            : milestone.status === "In Progress"
-                            ? "text-purple-600 dark:text-purple-400"
-                            : "text-slate-400 dark:text-slate-600"
-                        }`}
-                      />
-                      <span>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="pt-4 border-t border-black/5 dark:border-white/10 font-mono text-[11px] tracking-normal text-[#64748B] dark:text-slate-400">
+                  Phase 0{idx + 1}
+                </div>
               </div>
+            );
+          })}
+        </div>
 
-              <div className="pt-4 border-t border-slate-200/60 dark:border-white/10 text-xs font-mono font-semibold text-purple-700 dark:text-purple-400">
-                Milestone Target: {milestone.quarter} {milestone.year}
-              </div>
-            </div>
-          ))}
+        {/* Circular Prev / Next Controls (Nexchain Signature 50x50 Buttons) */}
+        <div className="mt-8 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={handlePrev}
+            disabled={activeIndex === 0}
+            aria-label="Previous roadmap phase"
+            className="w-12 h-12 rounded-full border border-[#E8E8E8] dark:border-white/15 bg-white dark:bg-[#0B0E17] text-[#0F172A] dark:text-white flex items-center justify-center hover:border-[#0F172A] dark:hover:border-white transition-colors disabled:opacity-40 cursor-pointer"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={activeIndex === milestones.length - 1}
+            aria-label="Next roadmap phase"
+            className="w-12 h-12 rounded-full border border-[#E8E8E8] dark:border-white/15 bg-white dark:bg-[#0B0E17] text-[#0F172A] dark:text-white flex items-center justify-center hover:border-[#0F172A] dark:hover:border-white transition-colors disabled:opacity-40 cursor-pointer"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
         </div>
       </div>
     </section>

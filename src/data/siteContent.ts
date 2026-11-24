@@ -36,12 +36,12 @@ export interface FaqItem {
 
 export const siteContent = {
   hero: {
-    badge: "BNB SMART CHAIN NETWORK",
+    badge: "BINANCE SMART CHAIN NETWORK",
     headlineLine1: "OKN",
     headlineLine2: "TOKEN",
     subheadline: "Powering the OKNexus Ecosystem",
     description:
-      "OKN Token powers a secure, transparent, and AI-powered ecosystem built for the next generation of digital finance on Binance Smart Chain.",
+      "OKN Token powers a secure, transparent, and AI-assisted ecosystem built for the next generation of digital finance on Binance Smart Chain.",
     primaryCta: {
       label: "Buy OKN",
       href: "#presale",
@@ -70,69 +70,69 @@ export const siteContent = {
   },
 
   trustStrip: {
-    headline: "Security & Infrastructure",
+    headline: "Powered by Binance Smart Chain",
     subtitle:
-      "OKNexus connects proven infrastructure, open tooling, and AI-native blockchain execution into one ecosystem.",
+      "OKNexus connects Binance Smart Chain infrastructure, AssureDeFi KYC compliance, and AI-assisted Web3 execution into one ecosystem.",
     securityAudits: [
-      { name: "CertiK", role: "SECURITY LEADER", verified: true },
-      { name: "SOLIDProof", role: "VERIFIED AUDIT", verified: true },
+      { name: "AssureDeFi", role: "KYC VERIFIED", verified: true },
+      { name: "BscScan", role: "VERIFIED CONTRACT", verified: true },
     ],
     infrastructurePartners: [
-      { name: "BNB Chain", category: "Powered by" },
-      { name: "Blockscout", category: "Explorer" },
-      { name: "Relay", category: "Interoperability" },
-      { name: "Celestia", category: "Data Availability" },
-      { name: "Arbitrum", category: "Execution L2" },
-      { name: "Caldera", category: "Rollup Infra" },
+      { name: "Binance Smart Chain", category: "Powered by" },
+      { name: "AssureDeFi", category: "KYC Verified" },
+      { name: "BscScan", category: "Explorer" },
+      { name: "Chainlink", category: "Oracle Pricing" },
+      { name: "OpenZeppelin", category: "Contract Standards" },
+      { name: "CoinSniper", category: "Featured Listing" },
     ],
   },
 
   about: {
-    eyebrow: "A SMARTER BLOCKCHAIN FOR",
+    eyebrow: "A SMARTER ECOSYSTEM FOR",
     headline: "The Next Generation of Digital Finance",
     description:
-      "OKN Token is designed to make blockchain interactions faster, easier, and smarter for users, builders, and ecosystem partners.",
+      "OKN Token is designed to make digital asset trading, staking, and onchain participation faster, clearer, and smarter for users and ecosystem partners.",
     features: [
       {
         id: "feat-1",
-        title: "AI at Network Level",
+        title: "AI Trading Intelligence",
         description:
-          "AI lives in the chain itself, optimizing performance, transaction routing, security, and execution.",
+          "24/7 AI agents analyze liquidity flows, strategy signals, and market risk directly alongside OKNexus Exchange.",
         iconName: "brain",
       },
       {
         id: "feat-2",
-        title: "Faster Experience",
+        title: "Faster BSC Settlement",
         description:
-          "Sub-second transaction finality, lower gas fees, and seamless Web3 interaction flows.",
+          "Low-fee Binance Smart Chain execution, sub-second exchange matching, and frictionless wallet swaps.",
         iconName: "zap",
       },
       {
         id: "feat-3",
-        title: "Smarter for Builders",
+        title: "OpenZeppelin Security",
         description:
-          "An AI-native developer environment for decentralized apps, smart contracts, and cross-chain products.",
+          "Built with battle-tested BEP-20 smart contract standards, BscScan verification, and Merkle proof claim logic.",
         iconName: "code",
       },
       {
         id: "feat-4",
-        title: "Clearer Onchain Activity",
+        title: "AssureDeFi KYC Verified",
         description:
-          "Deep contextual transaction intelligence, automated risk scoring, and real-time network behavior insights.",
+          "Verified team accountability via AssureDeFi alongside transparent on-chain supply and liquidity lock tracking.",
         iconName: "activity",
       },
       {
         id: "feat-5",
         title: "Built for Growth",
         description:
-          "Scalable Layer 1 infrastructure, robust token utility, multi-audited contracts, and a staged global rollout.",
+          "Capped 5B token supply, Chainlink-verified claim pricing, staking rewards, and multi-stage market expansion.",
         iconName: "trending",
       },
       {
         id: "feat-6",
-        title: "Cross Chain Native",
+        title: "Cross-Chain Ready",
         description:
-          "Designed from first principles to connect global ecosystems without locking users into an isolated silo.",
+          "Bridging BNB Smart Chain with Ethereum, Arbitrum, and Solana liquidity via OKNexus Exchange swap rails.",
         iconName: "layers",
       },
     ] as FeatureItem[],
@@ -145,14 +145,19 @@ export const siteContent = {
       originalPrice: "$0.08",
       listingPrice: "$0.30",
       cta: "Join Presale",
+      stageLadder: [
+        { label: "Stage 1 (Current Entry)", price: "$0.05", status: "LIVE" },
+        { label: "Stage 2 (Next Round)", price: "$0.08", status: "NEXT" },
+        { label: "TGE Public Listing", price: "$0.30", status: "+500% DELTA" },
+      ],
     },
   },
 
   comparison: {
     eyebrow: "ECOSYSTEM BENCHMARK",
-    headline: "How OKN Token compares to other AI blockchains",
+    headline: "How OKN Token compares to other AI ecosystems",
     subhead:
-      "AI-native Layer 1 execution with early presale access. Here's how it stacks up.",
+      "Early $0.05 presale access paired with an active Binance Smart Chain exchange, Mini-App, and AI trading stack.",
     headers: ["Category", "OKN Token", "NEAR", "Render", "Bittensor"],
     rows: [
       {
@@ -163,44 +168,43 @@ export const siteContent = {
         bittensor: "$320.10",
       },
       {
-        category: "Network Purpose",
-        okn: "L1 for AI Data & Logic",
-        near: "User-Owned AI & Sharding",
-        render: "Distributed GPU Compute",
-        bittensor: "Machine Intelligence Subnets",
+        category: "Network Foundation",
+        okn: "Binance Smart Chain (BEP-20)",
+        near: "Sharded L1",
+        render: "Solana SPL",
+        bittensor: "Substrate L1",
       },
       {
-        category: "Core Strength",
-        okn: "Onchain AI Execution",
+        category: "Core Utility",
+        okn: "Exchange + AI Trading + Launchpad",
         near: "Chain Abstraction",
-        render: "3D & AI Rendering",
-        bittensor: "AI Model Monetization",
+        render: "Distributed GPU Render",
+        bittensor: "AI Model Subnets",
       },
       {
-        category: "Consensus Mechanism",
-        okn: "Hybrid PoS + AI Engine",
-        near: "Nightshade PoS",
-        near_suffix: "PoS",
-        render: "Proof of Render / Burn",
-        bittensor: "Proof of Intelligence",
+        category: "Verification & KYC",
+        okn: "AssureDeFi KYC + BscScan",
+        near: "Public Foundation",
+        render: "Foundation",
+        bittensor: "Open Protocol",
       },
       {
         category: "Native AI Agents",
-        okn: "Yes",
+        okn: "Yes (24/7 Trading Agent)",
         near: "Yes",
         render: "No",
         bittensor: "Yes",
       },
       {
-        category: "Cross-Chain Architecture",
-        okn: "Native Multi-Chain Hub",
-        near: "Aurora Bridge + MPC",
-        render: "Solana Bridge",
-        bittensor: "Substrate Compatible",
+        category: "Telegram Mini-App",
+        okn: "Live (28K+ Community)",
+        near: "No",
+        render: "No",
+        bittensor: "No",
       },
       {
         category: "Ecosystem Exchange",
-        okn: "Yes",
+        okn: "Yes (Spot, P2P & Swap)",
         near: "No",
         render: "No",
         bittensor: "No",
@@ -212,55 +216,55 @@ export const siteContent = {
     eyebrow: "A CONNECTED ECOSYSTEM",
     headline: "One network. Endless possibilities.",
     description:
-      "From onchain trading and autonomous AI agents to staking rewards and cross-chain execution, OKNexus is built to power the next generation of decentralized applications.",
+      "From spot trading, P2P escrow, and cross-chain swaps on OKNexus Exchange to our 28K+ Telegram Mini-App community, OKN powers every layer.",
     pillars: [
       {
         id: "exchange",
         title: "OKNexus Exchange",
         tag: "FLAGSHIP PLATFORM",
         description:
-          "Institutional and decentralized trading engine built for speed, transparency, deep liquidity, and zero-slippage routing.",
-        stats: "0.01s latency • $0 Gas Options",
+          "High-speed centralized and Web3 trading platform with spot markets, escrow P2P rails, OTC desk, and zero-slippage swap routing.",
+        stats: "0.01s latency • Spot, P2P & Swap",
       },
       {
         id: "ai-agents",
-        title: "AI Prediction Agent",
+        title: "24/7 AI Trading Agent",
         tag: "AUTONOMOUS INTELLIGENCE",
         description:
-          "Onchain neural network monitoring liquidity flows, mempool risk signals, and order books for predictive execution.",
-        stats: "Live Risk Scoring • Automated Balancing",
+          "Automated strategy assistant monitoring liquidity flows, order books, and risk management signals around the clock.",
+        stats: "Live Risk Scoring • Automated Execution",
       },
       {
         id: "staking",
         title: "Staking & Yield Vaults",
         tag: "DEFI PRIMITIVES",
         description:
-          "Lock OKN to secure consensus validation, capture exchange revenue share, and earn tiered multiplier yields.",
-        stats: "Tiered Multipliers • Non-custodial",
+          "Stake OKN to earn tiered yield multipliers, capture fee discounts, and unlock ecosystem launchpad allocations.",
+        stats: "Tiered Multipliers • On-Chain Rewards",
       },
       {
         id: "crosschain",
         title: "Cross-Chain Instant Swaps",
         tag: "INTEROPERABILITY",
         description:
-          "Frictionless bridging and atomic execution connecting BNB Smart Chain, Arbitrum, Ethereum, and Solana.",
-        stats: "Multi-Chain Routing • Zero Slippage",
+          "One-click liquidity routing connecting Binance Smart Chain, Ethereum, Arbitrum, and Solana wallets seamlessly.",
+        stats: "Multi-Chain Routing • Non-Custodial",
       },
       {
         id: "launchpad",
-        title: "OKN Launchpad",
-        tag: "INCUBATION",
+        title: "OKN Launchpad & Card",
+        tag: "UTILITY & SPEND",
         description:
-          "Vetted early-stage Web3 and AI protocol launches with guaranteed tier allocation for OKN holders.",
-        stats: "Vetted Tier Access • Community First",
+          "Guaranteed allocation tiers for vetted Web3 launches alongside upcoming OKNexus crypto-spend debit card support.",
+        stats: "Vetted Tier Access • Crypto Spend",
       },
       {
         id: "security",
-        title: "Institutional Custody & Wallet",
-        tag: "SECURITY",
+        title: "AssureDeFi KYC & Custody",
+        tag: "SECURITY & COMPLIANCE",
         description:
-          "Multi-sig threshold architecture, biometric security, and full smart contract verification with real-time audit protection.",
-        stats: "AssureDeFi KYC • Multi-Audited",
+          "Project KYC verified by AssureDeFi, OpenZeppelin smart contract standards, and BscScan verified BEP-20 deployment.",
+        stats: "AssureDeFi KYC • BscScan Verified",
       },
     ],
   },
@@ -269,23 +273,23 @@ export const siteContent = {
     eyebrow: "TOKEN UTILITY & VALUE FLOW",
     headline: "The Power Behind Every Network Interaction",
     description:
-      "OKN is not a speculative token. It is the lifeblood utility engine driving transaction execution, governance rights, exchange fee discounts, and network yield distribution.",
+      "OKN is the core utility asset driving exchange fee discounts, AI trading agent access, staking rewards, governance voting, and launchpad tiers.",
     utilities: [
       {
-        title: "Transaction & Gas Settlement",
-        desc: "Power all transactions, smart contract executions, and state transitions across the OKNexus network with ultra-low, predictable fees.",
+        title: "Exchange Fee Discounts & Gas",
+        desc: "Settle trading fees across OKNexus Exchange spot, P2P, and instant swap markets with reduced fee tiers for OKN holders.",
       },
       {
-        title: "Staking & Revenue Share",
-        desc: "Stake OKN in decentralized security pools to earn a proportionate share of OKNexus Exchange trading volume and sequencer fees.",
+        title: "Staking & Reward Pools",
+        desc: "Stake OKN tokens to unlock flexible and locked APY pools, Telegram Mini-App multipliers, and ecosystem loyalty yields.",
       },
       {
         title: "Decentralized Governance",
-        desc: "Vote on protocol upgrades, grant distributions, parameter adjustments, and fee schedule optimizations.",
+        desc: "Vote on protocol upgrades, new token listings, treasury grants, and ecosystem parameter adjustments.",
       },
       {
-        title: "AI Agent Compute Credits",
-        desc: "Deploy, run, and query autonomous onchain AI agents and predictive models using OKN as the computational gas token.",
+        title: "AI Trading & Launchpad Access",
+        desc: "Unlock 24/7 AI Trading Agent analytics and guaranteed allocation tiers in OKNexus Launchpad token offerings.",
       },
     ],
   },
@@ -294,15 +298,15 @@ export const siteContent = {
     eyebrow: "STRUCTURED FOR SUSTAINABILITY",
     headline: "Transparent Supply & Allocation",
     description:
-      "A disciplined economic design with structured multi-year vesting, locked liquidity pools, and no hidden minting mechanics.",
+      "A disciplined economic design on Binance Smart Chain with multi-year vesting, locked DEX liquidity, and a fixed 5,000,000,000 cap.",
     totalSupply: "5,000,000,000 OKN",
     allocations: [
       {
         name: "Community Rewards",
         percentage: 35,
         tokens: "1,750,000,000 OKN",
-        color: "#3B82F6",
-        vesting: "Programmatic on-chain distribution based on validator uptime",
+        color: "#6366F1",
+        vesting: "Programmatic on-chain emissions & Telegram Mini-App rewards",
       },
       {
         name: "Public Sale",
@@ -316,7 +320,7 @@ export const siteContent = {
         percentage: 15,
         tokens: "750,000,000 OKN",
         color: "#10B981",
-        vesting: "100% locked into verified automated market maker liquidity",
+        vesting: "100% locked into verified AMM liquidity pools",
       },
       {
         name: "Team & Advisors",
@@ -330,7 +334,7 @@ export const siteContent = {
         percentage: 8,
         tokens: "400,000,000 OKN",
         color: "#06B6D4",
-        vesting: "Locked for 6 months, then quarterly release over 36 months",
+        vesting: "Locked for 6 months, quarterly release over 36 months",
       },
       {
         name: "Treasury",
@@ -346,7 +350,7 @@ export const siteContent = {
     eyebrow: "EXECUTION TIMELINE",
     headline: "Built on milestones, not promises.",
     description:
-      "A systematic, phase-by-phase rollout engineered to deliver real utility, robust infrastructure, and global adoption.",
+      "A systematic, phase-by-phase rollout delivering real exchange liquidity, AssureDeFi compliance, and 28K+ community adoption.",
     milestones: [
       {
         quarter: "Phase 01",
@@ -354,46 +358,46 @@ export const siteContent = {
         title: "Genesis & Foundation",
         status: "Completed",
         points: [
-          "OKN Token smart contract development (OpenZeppelin standards)",
-          "Multi-stage CertiK & SolidProof security audits completed",
-          "AssureDeFi KYC verification and institutional compliance",
-          "Presale infrastructure and Merkle claim engine deployment",
+          "OKN BEP-20 smart contract deployment on Binance Smart Chain",
+          "OpenZeppelin security standards & BscScan contract verification",
+          "AssureDeFi KYC verification completed for institutional compliance",
+          "Merkle claim engine and Chainlink oracle pricing integration",
         ],
       },
       {
         quarter: "Phase 02",
         year: "Q1-Q2 2026",
-        title: "Ecosystem Alpha & Community Expansion",
+        title: "Mini-App & Presale Expansion",
         status: "In Progress",
         points: [
-          "Telegram Mini-App and bot deployment (100k+ active champions)",
-          "Public Presale entry stages ($0.05 stage live)",
-          "Exchange alpha testnet with sub-second order book simulation",
-          "Strategic liquidity agreements with Tier-1 Market Makers",
+          "Telegram Mini-App & @okntoken_bot scaled to 28,000+ community members",
+          "Featured presale listing live on CoinSniper ($0.05 Stage 1 entry)",
+          "OKNexus Exchange Spot, P2P & Instant Swap platform rollout",
+          "Market maker liquidity provisioning for PancakeSwap & CEX debut",
         ],
       },
       {
         quarter: "Phase 03",
         year: "Q3 2026",
-        title: "TGE, Mainnet & Exchange Launch",
+        title: "TGE, Listings & Staking",
         status: "Upcoming",
         points: [
-          "Official Token Generation Event (TGE) and initial DEX/CEX listings",
-          "OKNexus Exchange mainnet launch with zero-slippage routing",
-          "Automated on-chain staking vaults and revenue share activation",
-          "First cohort of decentralized launchpad project incubations",
+          "Official Token Generation Event (TGE) at $0.30 listing target",
+          "PancakeSwap DEX liquidity lock & centralized exchange listings",
+          "Automated on-chain OKN staking vaults and fee-discount tiers",
+          "First cohort of OKNexus Launchpad Web3 project offerings",
         ],
       },
       {
         quarter: "Phase 04",
         year: "Q4 2026+",
-        title: "AI Autopilot & Global Scalability",
+        title: "AI Trading Agent & Spend Card",
         status: "Upcoming",
         points: [
-          "Autonomous onchain AI Prediction Agent full deployment",
-          "Cross-chain multi-asset atomic swap network expansion",
-          "Decentralized DAO governance handover and treasury activation",
-          "Enterprise and institutional crypto payment gateway integration",
+          "Full deployment of the 24/7 OKNexus AI Trading Agent suite",
+          "OKNexus Mastercard crypto-spend debit card activation",
+          "Cross-chain atomic bridge expansion (ETH, Arbitrum, Solana)",
+          "Decentralized DAO governance handover to OKN token holders",
         ],
       },
     ] as RoadmapMilestone[],
@@ -401,75 +405,79 @@ export const siteContent = {
 
   community: {
     eyebrow: "GLOBAL COMMUNITY",
-    headline: "Join a thriving network of 100,000+ pioneers.",
+    headline: "Join 28,000+ Telegram pioneers.",
     description:
-      "Connect with traders, developers, institutional partners, and crypto visionaries building the future of AI-powered decentralized finance.",
+      "Connect with traders, builders, and community champions shaping the OKNexus Exchange & OKN Token ecosystem on Binance Smart Chain.",
     stats: [
-      { label: "Community Members", value: "100K+" },
-      { label: "Participating Investors", value: "19.5K+" },
-      { label: "Countries Represented", value: "85+" },
+      { label: "Telegram", value: "28K+" },
+      { label: "Investors", value: "19.5K+" },
+      { label: "Countries", value: "85+" },
     ],
     socials: [
-      { name: "Telegram", handle: "@OkNexusExchange", href: "https://t.me/OkNexusExchange" },
-      { name: "X (Twitter)", handle: "@OkNexusExchange", href: "https://x.com/OkNexusExchange" },
-      { name: "YouTube", handle: "@OkNexusExchange", href: "https://www.youtube.com/@OkNexusExchange" },
-      { name: "Discord", handle: "OKNexus Discord", href: "https://discord.com" },
-      { name: "Instagram", handle: "@oknexusexchange", href: "https://instagram.com" },
+      { name: "Telegram", handle: "@oknexus_eco", href: "https://t.me/oknexus_eco" },
+      { name: "X (Twitter)", handle: "@OkNexusEco", href: "https://x.com/OkNexusEco" },
+      { name: "YouTube", handle: "@Oknexusexchange2022", href: "https://www.youtube.com/@Oknexusexchange2022" },
+      { name: "Discord", handle: "OKNexus Discord", href: "https://discord.gg/Mt66r4Sg7r" },
+      { name: "Facebook", handle: "OKNexus Facebook", href: "https://www.facebook.com/share/1EkrNc96ep/?mibextid=wwXIfr" },
+      { name: "Instagram", handle: "@oknexusexchange", href: "https://www.instagram.com/oknexusexchange" },
+      { name: "Threads", handle: "@oknexusexchange", href: "https://www.threads.com/@oknexusexchange" },
+      { name: "Bluesky", handle: "@oknexusexchange.com", href: "https://bsky.app/profile/oknexusexchange.com" },
+      { name: "TikTok", handle: "@oknexusexchange", href: "https://www.tiktok.com/@oknexusexchange" },
     ],
   },
 
   media: {
-    headline: "AS FEATURED IN TOP WEB3 & FINANCIAL OUTLETS",
+    headline: "LISTED & FEATURED ACROSS WEB3 PLATFORMS",
     outlets: [
-      { name: "CoinDesk", logo: "/brand/coindesk.svg" },
-      { name: "CoinMarketCap", logo: "/brand/cmc.svg" },
-      { name: "CoinGecko", logo: "/brand/coingecko.svg" },
-      { name: "Decrypt", logo: "/brand/decrypt.svg" },
-      { name: "Blockworks", logo: "/brand/blockworks.svg" },
-      { name: "Binance Feed", logo: "/brand/binance.svg" },
+      { name: "CoinSniper", href: "https://coinsniper.net" },
+      { name: "BscScan", href: "https://bscscan.com/token/0xBF6B0312f52fa8390Ec9393A9375BF05c8E40377" },
+      { name: "AssureDeFi", href: "https://assuredefi.com" },
+      { name: "BNB Smart Chain", href: "https://www.bnbchain.org" },
+      { name: "OKNexus Exchange", href: "https://oknexusexchange.com" },
+      { name: "Telegram Mini-App", href: "https://t.me/okntoken_bot?start=login" },
     ],
   },
 
   faq: {
     eyebrow: "GOT QUESTIONS?",
-    headline: "Frequently Asked Questions",
+    headline: "Frequently asked questions",
     description:
-      "Find immediate answers about the OKN presale, token economics, claim mechanics, and technical architecture.",
+      "Find immediate answers about the OKN presale, Binance Smart Chain contract, AssureDeFi KYC, and claim process.",
     items: [
       {
         question: "What is OKN Token?",
         answer:
-          "OKN Token is the native utility and governance asset of the OKNexus ecosystem. It powers transaction fee settlement, AI trading engine access, decentralized governance, staking rewards, and cross-chain liquidity routing.",
+          "OKN Token ($OKN) is the native BEP-20 utility and governance token of the OKNexus Ecosystem on Binance Smart Chain. It powers OKNexus Exchange trading fee discounts, 24/7 AI trading agents, staking yields, launchpad access, and governance.",
       },
       {
-        question: "What makes OKNexus different from traditional blockchains?",
+        question: "Which blockchain powers OKN Token?",
         answer:
-          "OKNexus integrates AI at the network consensus level to provide real-time transaction risk scoring, optimized routing, and autonomous agent capabilities, combined with sub-second finality and multi-chain interoperability.",
+          "OKN Token is powered by Binance Smart Chain (BSC / BEP-20), verified on BscScan at contract 0xBF6B0312f52fa8390Ec9393A9375BF05c8E40377, delivering fast low-cost transactions and Chainlink oracle claim pricing.",
       },
       {
-        question: "What is the current entry price and listing price?",
+        question: "Is OKN Token KYC verified?",
         answer:
-          "The current presale stage entry price is $0.05 per OKN. The confirmed listing price at Token Generation Event (TGE) is scheduled at $0.30 per OKN, representing a +500% base price delta.",
+          "Yes. OKN Token is KYC verified by AssureDeFi (@AssureDeFi) and deployed using OpenZeppelin BEP-20 smart contract standards with transparent supply tracking and Merkle claim verification.",
       },
       {
-        question: "How can I participate in the presale?",
+        question: "What is the current presale price and listing target?",
         answer:
-          "You can participate directly by connecting your supported Web3 wallet (such as MetaMask, Trust Wallet, or Binance Web3 Wallet) and acquiring OKN with BNB, USDT, or BUSD on BNB Smart Chain.",
+          "Stage 1 presale entry is currently $0.05 per OKN, stepping up to $0.08 in the next stage, with a scheduled Token Generation Event (TGE) listing target of $0.30.",
       },
       {
-        question: "Is the OKN smart contract audited and verified?",
+        question: "How large is the OKN community and how do I join?",
         answer:
-          "Yes. OKN smart contracts have undergone rigorous multi-phase security audits conducted by industry-leading security firms CertiK and SolidProof. Additionally, the project team is KYC-verified through AssureDeFi.",
+          "Our Telegram community has grown to over 28,000 active members participating in @okntoken_bot tasks, daily check-ins, and presale allocation rounds across 85+ countries.",
       },
       {
-        question: "What is the total supply and vesting schedule?",
+        question: "Where is OKN Token listed and tracked?",
         answer:
-          "The maximum total supply is capped at 5,000,000,000 OKN on BNB Smart Chain. The presale allocation represents 30% of the total supply, unlocked with structured vesting to protect token health and maintain stable ecosystem liquidity.",
+          "OKN Token is featured on CoinSniper, publicly verifiable on BscScan, KYC-archived on AssureDeFi, and integrated directly with OKNexus Exchange and our Telegram Mini-App.",
       },
       {
-        question: "When will the Token Generation Event (TGE) occur?",
+        question: "What is the total supply and vesting structure?",
         answer:
-          "The Token Generation Event and public market listing are scheduled for Q3 2026, following the completion of the mainnet validation phase and tier-1 exchange liquidity setups.",
+          "The total supply is strictly capped at 5,000,000,000 OKN. Allocations include 35% Community Rewards, 25% Public Sale, 15% locked DEX Liquidity, 12% Team & Advisors (12-month cliff), 8% Ecosystem, and 5% Treasury.",
       },
     ] as FaqItem[],
   },
@@ -478,7 +486,7 @@ export const siteContent = {
     headlineLine1: "Every Stage Brings",
     headlineLine2: "A Higher Price",
     description:
-      "The current $0.05 entry window is available for a limited time before the next scheduled increase.",
+      "The current $0.05 entry window on Binance Smart Chain is available before the next scheduled increase.",
     cta: "Join Presale",
     secondaryCta: "Read the Whitepaper",
   },

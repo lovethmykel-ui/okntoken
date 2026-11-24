@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 
 interface SectionHeadingProps {
   eyebrow?: string;
   title: string | React.ReactNode;
+  mutedTitle?: string;
   description?: string;
   centered?: boolean;
   dark?: boolean;
@@ -15,6 +15,7 @@ interface SectionHeadingProps {
 export function SectionHeading({
   eyebrow,
   title,
+  mutedTitle,
   description,
   centered = false,
   dark = false,
@@ -22,47 +23,40 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div
-      className={`flex flex-col gap-3 ${
+      className={`flex flex-col gap-5 ${
         centered ? "items-center text-center" : "items-start text-left"
       } ${className}`}
     >
       {eyebrow && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase bg-purple-500/10 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-500/20 dark:border-purple-500/30 backdrop-blur-md"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-purple-600 dark:bg-purple-400 animate-pulse" />
+        <span className="text-xs font-medium tracking-[-0.02em] text-purple-600 dark:text-purple-400">
           {eyebrow}
-        </motion.div>
+        </span>
       )}
 
-      <motion.h2
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className={`font-heading text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.12] ${
-          dark ? "text-white" : "text-slate-950 dark:text-white"
+      <h2
+        className={`text-3xl sm:text-5xl lg:text-[54px] font-normal tracking-[-0.045em] leading-[1.06] [text-wrap:balance] ${
+          dark ? "text-white" : "text-[#0F172A] dark:text-white"
         }`}
       >
         {title}
-      </motion.h2>
+        {mutedTitle && (
+          <>
+            {" "}
+            <span className={dark ? "text-slate-400" : "text-[#94A3B8] dark:text-slate-500"}>
+              {mutedTitle}
+            </span>
+          </>
+        )}
+      </h2>
 
       {description && (
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className={`text-base sm:text-lg max-w-2xl leading-relaxed ${
-            dark ? "text-slate-300" : "text-slate-600 dark:text-slate-300"
+        <p
+          className={`text-sm sm:text-base max-w-[460px] leading-[1.45] tracking-[-0.03em] font-normal ${
+            dark ? "text-slate-400" : "text-[#64748B] dark:text-slate-400"
           }`}
         >
           {description}
-        </motion.p>
+        </p>
       )}
     </div>
   );

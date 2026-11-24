@@ -12,60 +12,35 @@ interface SpotlightCardProps extends HTMLMotionProps<"div"> {
 export function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(124, 58, 237, 0.18)",
+  spotlightColor = "rgba(124, 58, 237, 0.08)",
   ...props
 }: SpotlightCardProps) {
   const divRef = useRef<HTMLDivElement>(null);
-  const [isFocused, setIsFocused] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current) return;
-    const div = divRef.current;
-    const rect = div.getBoundingClientRect();
+    const rect = divRef.current.getBoundingClientRect();
     setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
-    setOpacity(1);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
-    setOpacity(0);
-  };
-
-  const handleMouseEnter = () => {
-    setOpacity(1);
-  };
-
-  const handleMouseLeave = () => {
-    setOpacity(0);
   };
 
   return (
     <motion.div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={`relative overflow-hidden rounded-3xl glass-light dark:glass-dark transition-all duration-300 ${className}`}
+      onMouseEnter={() => setOpacity(1)}
+      onMouseLeave={() => setOpacity(0)}
+      className={`relative overflow-hidden rounded-2xl border border-slate-200/90 dark:border-white/10 bg-white dark:bg-[#0B0E17] transition-colors duration-200 ${className}`}
       {...props}
     >
-      {/* ReactBits / Inspora Dynamic Spotlight Refraction Glow */}
       <div
-        className="pointer-events-none absolute -inset-px transition-opacity duration-300 rounded-3xl"
+        className="pointer-events-none absolute -inset-px transition-opacity duration-200 rounded-2xl"
         style={{
           opacity,
-          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 70%)`,
+          background: `radial-gradient(360px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 70%)`,
         }}
       />
-
-      {/* Card Content Vessel */}
       <div className="relative z-10">{children}</div>
     </motion.div>
   );

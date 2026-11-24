@@ -3,339 +3,293 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
+import { ArrowRight, ChevronDown, ExternalLink, ShieldCheck } from "lucide-react";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
-import { ShinyText } from "@/components/ui/ShinyText";
-import { ArrowRight, Package, CheckCircle2, Sparkles } from "lucide-react";
+import { estimatePresaleAllocation } from "@/lib/tokenomicsMath";
+
+const SHIMMER_CELLS = [
+  { col: 1, row: 0, delay: "0s" },
+  { col: 3, row: 1, delay: "1.4s" },
+  { col: 5, row: 0, delay: "2.8s" },
+  { col: 2, row: 2, delay: "0.7s" },
+  { col: 4, row: 2, delay: "2.1s" },
+  { col: 0, row: 1, delay: "3.5s" },
+];
 
 export function Hero() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [showEstimator, setShowEstimator] = useState(false);
+  const [payCurrency, setPayCurrency] = useState<"USDT" | "BNB">("USDT");
+  const [amountInput, setAmountInput] = useState<string>("500");
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY, currentTarget } = e;
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-    const x = ((clientX - left) / width - 0.5) * 14;
-    const y = ((clientY - top) / height - 0.5) * 14;
-    setMousePos({ x, y });
-  };
+  const { estimatedOkn, listingValue } = estimatePresaleAllocation(amountInput, payCurrency);
 
   return (
     <section
       id="hero"
-      onMouseMove={handleMouseMove}
-      className="relative min-h-[92vh] pt-6 pb-16 lg:pt-10 lg:pb-24 overflow-hidden bg-gradient-to-b from-[#F8F9FE] via-[#F0F3FD] to-[#E8EDFC] dark:from-[#06070B] dark:via-[#090C16] dark:to-[#0D101E] transition-colors duration-500 scroll-mt-24"
+      className="relative min-h-[calc(100dvh-70px)] py-8 sm:py-12 bg-gradient-to-b from-white via-[#FAF9FF] to-white dark:bg-[#06070B] dark:from-[#06070B] dark:via-[#06070B] dark:to-[#06070B] border-t border-[#ECEAEF] dark:border-white/10 border-b flex items-center overflow-hidden transition-colors duration-300"
     >
-      {/* Background Graphic System: Luminous Ambient Light Meshes & Liquid Refraction Grid */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Tech Grid with Liquid Depth */}
-        <div className="absolute inset-0 bg-grid-subtle opacity-40 dark:opacity-25" />
-
-        {/* Central Luminous Radial Orbs for Real Frosted Glass Refraction */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] sm:w-[900px] h-[750px] sm:h-[900px] bg-gradient-to-tr from-purple-600/30 via-indigo-600/20 to-cyan-400/30 dark:from-purple-600/40 dark:via-fuchsia-600/30 dark:to-cyan-400/30 rounded-full blur-[150px] animate-pulse-subtle" />
-        <div className="absolute top-1/6 left-6 w-96 h-96 bg-purple-500/20 dark:bg-purple-600/25 rounded-full blur-[130px]" />
-        <div className="absolute top-1/4 right-6 w-96 h-96 bg-cyan-400/20 dark:bg-cyan-500/25 rounded-full blur-[130px]" />
-
-        {/* Holographic Dotted Globe Wireframe in Background */}
-        <svg
-          viewBox="0 0 1000 600"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[720px] opacity-35 dark:opacity-30 text-purple-500/60 dark:text-purple-400/50"
-          fill="none"
-          stroke="currentColor"
-        >
-          <ellipse cx="500" cy="300" rx="430" ry="240" strokeWidth="1" strokeDasharray="4 4" />
-          <ellipse cx="500" cy="300" rx="350" ry="190" strokeWidth="1" strokeDasharray="6 6" />
-          <ellipse cx="500" cy="300" rx="260" ry="140" strokeWidth="1.2" />
-          <path d="M 70 300 Q 500 110 930 300" strokeWidth="1" strokeDasharray="3 3" />
-          <path d="M 70 300 Q 500 490 930 300" strokeWidth="1" strokeDasharray="3 3" />
-          <line x1="500" y1="50" x2="500" y2="550" strokeWidth="1" strokeDasharray="2 4" />
-        </svg>
-
-        {/* Soft Glass Horizon Glow at Bottom */}
-        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-white/95 dark:from-[#06070B] via-white/50 dark:via-[#06070B]/50 to-transparent" />
+      {/* Full-bleed 235px architectural grid + subtle shimmering purple cells */}
+      <div className="absolute inset-0 pointer-events-none hero-grid-pattern" aria-hidden="true">
+        <div className="hidden lg:grid grid-cols-6 grid-rows-3 w-full h-full">
+          {Array.from({ length: 18 }).map((_, idx) => {
+            const col = idx % 6;
+            const row = Math.floor(idx / 6);
+            const match = SHIMMER_CELLS.find((c) => c.col === col && c.row === row);
+            return (
+              <div
+                key={idx}
+                className={match ? "hero-cell-pulse" : ""}
+                style={match ? { animationDelay: match.delay } : undefined}
+              />
+            );
+          })}
+        </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
-          
-          {/* ========================================================
-              LEFT COLUMN: Master Headline, Subtitle, CTAs & BSC/KYC Badges
-              ======================================================== */}
-          <div className="lg:col-span-4 flex flex-col items-start z-20">
-            {/* Powered by Binance Smart Chain Pill */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-pill border border-amber-400/40 dark:border-amber-500/30 mb-4 shadow-sm"
-            >
+      {/* Luminous Soft Lavender & Cyan Corner Glows for Tactile Depth */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 46% 74% at 8% 18%, rgba(124, 58, 237, 0.13) 0%, rgba(124, 58, 237, 0.05) 36%, transparent 68%), radial-gradient(ellipse 46% 76% at 92% 18%, rgba(6, 182, 212, 0.13) 0%, rgba(99, 102, 241, 0.06) 36%, transparent 68%)",
+        }}
+      />
+
+      {/* Flanking 3D OKN Tokens on Wide Desktops */}
+      <div
+        aria-hidden="true"
+        className="hidden xl:block pointer-events-none absolute left-[7%] bottom-[14%] w-28 h-28 opacity-90"
+      >
+        <Image
+          src="/brand/OKN_coin_transparent.webp"
+          alt=""
+          width={112}
+          height={112}
+          priority
+          className="object-contain -rotate-12 animate-float-subtle drop-shadow-[0_22px_36px_rgba(124,58,237,0.22)]"
+        />
+      </div>
+      <div
+        aria-hidden="true"
+        className="hidden xl:block pointer-events-none absolute right-[7%] top-[18%] w-24 h-24 opacity-85"
+      >
+        <Image
+          src="/brand/OKN_coin_transparent.webp"
+          alt=""
+          width={96}
+          height={96}
+          priority
+          className="object-contain rotate-12 animate-float-subtle drop-shadow-[0_22px_36px_rgba(6,182,212,0.22)]"
+        />
+      </div>
+
+      {/* Centered Narrow Editorial Stack */}
+      <div className="w-full max-w-[820px] mx-auto px-4 relative z-10 flex flex-col items-center gap-4 sm:gap-5">
+        {/* Clean Unboxed Editorial Kicker */}
+        <p className="inline-flex items-center gap-2 text-xs font-mono font-medium uppercase tracking-[0.14em] text-purple-700 dark:text-purple-300">
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-600 dark:bg-purple-400" aria-hidden="true" />
+          Stage 1 Live · $0.05 Entry Window
+        </p>
+
+        {/* Centered Stacked Display Headline */}
+        <div className="flex flex-col items-center gap-3.5 sm:gap-4 text-center">
+          <h1 className="text-[42px] sm:text-[62px] font-medium leading-[0.98] tracking-[-0.045em] text-[#0F172A] dark:text-white text-balance">
+            <span className="block">OKN Token</span>
+            <span className="block">AI-Native Ecosystem</span>
+          </h1>
+
+          <p className="max-w-[520px] text-sm sm:text-base font-normal leading-[1.48] tracking-[-0.02em] text-[#475569] dark:text-slate-300 text-balance">
+            Powered by Binance Smart Chain and KYC verified by AssureDeFi — uniting OKNexus Exchange, 24/7 AI trading agents, and a 28K+ Telegram community.
+          </p>
+        </div>
+
+        {/* Elevated Light-Mode Presale Card with Layered Depth */}
+        <div
+          id="presale"
+          className="w-full max-w-[488px] mt-1 p-5 sm:p-6 rounded-2xl border border-[#E6E3F1] dark:border-white/12 bg-white dark:bg-[#0B0E17]/95 shadow-[0_24px_60px_rgba(124,58,237,0.09),0_6px_18px_rgba(15,23,42,0.04)] dark:shadow-[0_18px_70px_rgba(0,0,0,0.45)] scroll-mt-24"
+        >
+          {/* Card Header */}
+          <div className="flex items-center justify-between gap-3 mb-3.5">
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-[0.08em] text-purple-700 dark:text-purple-300">
+              Current Entry
+            </span>
+
+            <div className="flex items-center gap-1.5 text-xs text-[#64748B] dark:text-slate-400">
               <Image
-                src="/brand/bnb_chain_logo.png"
+                src="/brand/bnb_chain_logo.webp"
                 alt="Binance Smart Chain"
-                width={16}
-                height={16}
+                width={15}
+                height={15}
+                priority
                 className="object-contain"
               />
-              <span className="text-[11px] font-mono font-bold tracking-wide text-slate-800 dark:text-amber-300 uppercase">
-                BNB Smart Chain Network
+              <span className="font-medium text-[#0F172A] dark:text-slate-200">
+                Binance Smart Chain
               </span>
-            </motion.div>
+            </div>
+          </div>
 
-            {/* Primary Master Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heading text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight text-slate-950 dark:text-white leading-[1.02] mb-2"
+          {/* Soft Lavender Highlight Price Box */}
+          <div className="p-4 rounded-xl bg-gradient-to-br from-[#F5F2FF] via-[#F2F0FF] to-[#EEF6FF] dark:bg-purple-500/12 border border-purple-500/18 dark:border-purple-400/25">
+            <span className="block text-[11px] font-medium uppercase tracking-[0.03em] text-[#475569] dark:text-purple-200/80">
+              $0.05 Entry · Next $0.08 · Listing $0.30
+            </span>
+
+            <div className="flex items-end justify-between gap-4 mt-2.5">
+              <strong className="text-[40px] leading-[0.9] font-medium tracking-[-0.03em] tabular-nums text-[#0F172A] dark:text-white">
+                $0.05
+              </strong>
+
+              <div className="text-right tabular-nums leading-snug">
+                <span className="block text-sm font-medium text-[#0F172A] dark:text-white">
+                  ~$17M+ <span className="font-normal text-[#64748B] dark:text-slate-400">raised</span>
+                </span>
+                <span className="block text-xs font-medium text-[#0F172A] dark:text-slate-200">
+                  19,523 <span className="font-normal text-[#64748B] dark:text-slate-400">investors</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Clean Progress Hairline */}
+            <div className="mt-3.5 w-full h-1.5 rounded-full bg-purple-950/10 dark:bg-white/10 overflow-hidden">
+              <div className="w-[74%] h-full rounded-full bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-500" />
+            </div>
+
+            <div className="mt-3 flex items-center justify-between gap-2 text-[11px] text-[#475569] dark:text-purple-200/80">
+              <span>Stage window ends in</span>
+              <CountdownTimer theme="compact" className="text-xs text-[#0F172A] dark:text-white" />
+            </div>
+          </div>
+
+          {/* Interactive Allocation Estimator Toggle */}
+          <div className="mt-3">
+            <button
+              type="button"
+              onClick={() => setShowEstimator(!showEstimator)}
+              aria-expanded={showEstimator}
+              className="w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-medium text-[#475569] dark:text-slate-300 hover:bg-[#FAF9FF] dark:hover:bg-white/[0.04] transition-colors cursor-pointer"
             >
-              OKN{" "}
-              <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 dark:from-purple-400 dark:via-indigo-300 dark:to-cyan-300 bg-clip-text text-transparent drop-shadow-sm">
-                TOKEN
-              </span>
-            </motion.h1>
+              <span>Calculate OKN allocation &amp; TGE value</span>
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  showEstimator ? "rotate-180" : ""
+                }`}
+              />
+            </button>
 
-            {/* Sub-Headline */}
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heading text-2xl sm:text-3xl lg:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight leading-snug mb-4"
+            {showEstimator && (
+              <div className="mt-2 p-3 rounded-xl border border-[#E6E3F1] dark:border-white/10 bg-[#FAF9FF] dark:bg-white/[0.03] space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    value={amountInput}
+                    onChange={(e) => setAmountInput(e.target.value)}
+                    aria-label={`Amount in ${payCurrency}`}
+                    className="w-full bg-white dark:bg-[#06070B] border border-[#E2DFEE] dark:border-white/10 rounded-lg px-3 py-1.5 text-sm font-medium tabular-nums text-[#0F172A] dark:text-white focus:outline-none focus:border-purple-500"
+                    placeholder="500"
+                  />
+                  <div className="inline-flex rounded-lg border border-[#E2DFEE] dark:border-white/10 bg-white dark:bg-[#06070B] p-0.5 shrink-0">
+                    {(["USDT", "BNB"] as const).map((cur) => (
+                      <button
+                        key={cur}
+                        type="button"
+                        onClick={() => setPayCurrency(cur)}
+                        className={`px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors cursor-pointer ${
+                          payCurrency === cur
+                            ? "bg-[#0F172A] text-white dark:bg-purple-600"
+                            : "text-slate-500 dark:text-slate-400"
+                        }`}
+                      >
+                        {cur}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex items-center justify-between text-xs tabular-nums">
+                  <span className="text-[#64748B] dark:text-slate-400">
+                    Estimated tokens
+                  </span>
+                  <span className="font-medium text-[#0F172A] dark:text-white">
+                    {estimatedOkn.toLocaleString(undefined, { maximumFractionDigits: 0 })} OKN{" "}
+                    <span className="text-purple-700 dark:text-purple-300">
+                      (${listingValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} at TGE)
+                    </span>
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Single Dominant Primary CTA */}
+          <div className="mt-3">
+            <a
+              href="https://t.me/okntoken_bot?start=login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full h-12 inline-flex items-center justify-center gap-2 rounded-full bg-[#0F172A] dark:bg-white text-white dark:text-[#0F172A] text-[15px] font-medium shadow-[0_8px_20px_rgba(15,23,42,0.16)] hover:bg-purple-700 dark:hover:bg-purple-100 transition-colors group"
             >
-              Powering the OKNexus Ecosystem
-            </motion.h2>
+              <span>Join Presale</span>
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </a>
 
-            {/* Subtitle / Paragraph */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-sm font-normal leading-relaxed mb-8"
-            >
-              OKN Token powers a secure, transparent and AI-powered ecosystem built for the future of digital finance on Binance Smart Chain.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap items-center gap-3.5 mb-8"
-            >
-              <Link
-                href="#presale"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-bold text-sm shadow-xl shadow-purple-600/30 hover:shadow-purple-600/50 hover:scale-[1.02] transition-all border-t border-white/25"
-              >
-                <span>Buy OKN</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
+            <div className="mt-2.5 flex items-center justify-center gap-4 text-xs text-[#475569] dark:text-slate-400">
               <Link
                 href="#ecosystem"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-2xl glass-light text-slate-800 dark:text-white font-bold text-sm hover:border-purple-400 dark:hover:border-purple-400/80 transition-all shadow-md"
+                className="hover:text-purple-700 dark:hover:text-purple-300 transition-colors font-medium"
               >
-                <span>Explore Ecosystem</span>
-                <Package className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                Explore Ecosystem
               </Link>
-            </motion.div>
+              <span aria-hidden="true" className="text-[#CBD5E1] dark:text-slate-700">·</span>
+              <Link
+                href="/how-to-claim"
+                className="hover:text-purple-700 dark:hover:text-purple-300 transition-colors font-medium"
+              >
+                How to Claim
+              </Link>
+            </div>
+          </div>
 
-            {/* Official Assure DeFi KYC Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center gap-3.5 p-3 px-4 rounded-2xl glass-light border border-amber-300/60 dark:border-amber-500/30 shadow-md hover:border-amber-400 transition-colors"
+          {/* Unified Single-Row Verification Strip (AssureDeFi KYC · BscScan · CoinSniper) */}
+          <div className="mt-4 pt-3.5 border-t border-[#ECEAF4] dark:border-white/10 grid grid-cols-3 divide-x divide-[#ECEAF4] dark:divide-white/10 text-center">
+            <a
+              href="https://assuredefi.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 px-1.5 text-[11px] text-[#475569] dark:text-slate-300 hover:text-purple-700 dark:hover:text-purple-300 transition-colors whitespace-nowrap"
             >
               <Image
                 src="/brand/assure_defi_badge.webp"
-                alt="Verified by Assure DeFi"
-                width={36}
-                height={36}
-                className="object-contain drop-shadow-sm"
+                alt="AssureDeFi KYC"
+                width={13}
+                height={13}
+                className="object-contain shrink-0"
               />
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
-                    KYC VERIFIED PROJECT
-                  </span>
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
-                </div>
-                <a
-                  href="https://assuredefi.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-extrabold text-amber-700 dark:text-amber-400 hover:underline"
-                >
-                  @AssureDeFi
-                </a>
-              </div>
-            </motion.div>
+              <span className="font-medium text-[#0F172A] dark:text-white">AssureDeFi</span>
+            </a>
+
+            <a
+              href="https://bscscan.com/token/0xBF6B0312f52fa8390Ec9393A9375BF05c8E40377"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 px-1.5 text-[11px] text-[#475569] dark:text-slate-300 hover:text-purple-700 dark:hover:text-purple-300 transition-colors whitespace-nowrap"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400 shrink-0" />
+              <span className="font-medium text-[#0F172A] dark:text-white">BscScan</span>
+            </a>
+
+            <a
+              href="https://coinsniper.net"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1 px-1.5 text-[11px] text-[#475569] dark:text-slate-300 hover:text-purple-700 dark:hover:text-purple-300 transition-colors whitespace-nowrap"
+            >
+              <span className="font-medium text-[#0F172A] dark:text-white">CoinSniper</span>
+              <ExternalLink className="w-3 h-3 text-[#64748B] shrink-0" />
+            </a>
           </div>
-
-          {/* ========================================================
-              CENTER COLUMN: 3D Master Coin on Glowing Liquid Pedestal
-              ======================================================== */}
-          <div className="lg:col-span-4 flex flex-col items-center justify-center relative min-h-[360px] sm:min-h-[440px] lg:min-h-[480px] my-6 lg:my-0">
-            {/* Ambient Radial Halo & Concentric Neon Pedestal Rings */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-72 sm:w-96 h-32 sm:h-44 pointer-events-none">
-              <div className="absolute inset-0 rounded-[100%] bg-gradient-to-r from-purple-500/35 via-fuchsia-500/45 to-cyan-500/35 dark:from-purple-500/50 dark:via-fuchsia-500/60 dark:to-cyan-500/50 border border-purple-400/60 blur-xs shadow-[0_0_80px_rgba(124,58,237,0.65)]" />
-              <div className="absolute inset-2 sm:inset-3 rounded-[100%] bg-gradient-to-b from-white/70 dark:from-white/30 to-purple-600/30 border border-white/95 dark:border-white/40 backdrop-blur-xl shadow-inner" />
-              <div className="absolute inset-6 rounded-[100%] bg-gradient-to-tr from-purple-600 via-indigo-500 to-cyan-400 opacity-85 blur-md animate-pulse" />
-            </div>
-
-            {/* Orbiting Satellite Token 1 (Top-Left) */}
-            <motion.div
-              animate={{
-                y: [0, -12, 0],
-                x: [0, 8, 0],
-              }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-8 left-4 sm:left-6 w-11 h-11 rounded-full z-10 opacity-95 drop-shadow-[0_0_20px_rgba(124,58,237,0.9)]"
-            >
-              <Image
-                src="/brand/OKN_coin_transparent.png"
-                alt="Mini Token Orbiter"
-                width={44}
-                height={44}
-                className="object-contain"
-              />
-            </motion.div>
-
-            {/* Orbiting Satellite Token 2 (Bottom-Right) */}
-            <motion.div
-              animate={{
-                y: [0, 12, 0],
-                x: [0, -8, 0],
-              }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-14 right-4 sm:right-6 w-9 h-9 rounded-full z-10 opacity-90 drop-shadow-[0_0_16px_rgba(6,182,212,0.9)]"
-            >
-              <Image
-                src="/brand/OKN_coin_transparent.png"
-                alt="Mini Token Orbiter"
-                width={36}
-                height={36}
-                className="object-contain"
-              />
-            </motion.div>
-
-            {/* Master 3D Coin Showcase with Interactive 3D Perspective Tilt */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              style={{
-                transform: `perspective(1000px) rotateY(${mousePos.x}deg) rotateX(${-mousePos.y}deg)`,
-              }}
-              className="relative w-64 h-64 sm:w-80 sm:h-80 xl:w-96 xl:h-96 z-20 transition-transform duration-200 ease-out flex items-center justify-center"
-            >
-              <Image
-                src="/brand/OKN_coin_transparent.png"
-                alt="OKN 3D Master Coin"
-                width={400}
-                height={400}
-                className="object-contain drop-shadow-[0_30px_60px_rgba(124,58,237,0.5)] dark:drop-shadow-[0_30px_70px_rgba(124,58,237,0.85)] animate-float-subtle relative z-20"
-                priority
-              />
-            </motion.div>
-          </div>
-
-          {/* ========================================================
-              RIGHT COLUMN: Dedicated ReactBits Spotlight Presale Card
-              ======================================================== */}
-          <div className="lg:col-span-4 flex flex-col items-center lg:items-end z-20">
-            <SpotlightCard
-              id="presale"
-              spotlightColor="rgba(124, 58, 237, 0.25)"
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-full max-w-sm rounded-3xl p-6 sm:p-7 relative overflow-hidden backdrop-blur-3xl"
-            >
-              {/* Card Top Title */}
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                  $0.05 ENTRY WINDOW
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold border border-emerald-200 dark:border-emerald-500/30">
-                  Live Stage
-                </span>
-              </div>
-
-              {/* Inner Stage Card Box */}
-              <div className="p-4 rounded-2xl bg-white/90 dark:bg-white/10 border border-purple-200/60 dark:border-white/15 shadow-sm mb-4">
-                <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300 block mb-0.5">
-                  Current Entry
-                </span>
-                <div className="text-xl font-heading font-black text-slate-900 dark:text-white leading-tight">
-                  $0.05{" "}
-                  <span className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-300 bg-clip-text text-transparent">
-                    ENTRY WINDOW
-                  </span>
-                </div>
-              </div>
-
-              {/* 3-Column Price Metrics Grid */}
-              <div className="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-100/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 mb-4 text-center">
-                <div className="flex flex-col">
-                  <span className="text-base font-mono font-black text-slate-900 dark:text-white">
-                    $0.05
-                  </span>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight">
-                    Current stage
-                  </span>
-                </div>
-
-                <div className="flex flex-col border-x border-slate-200 dark:border-white/15">
-                  <span className="text-base font-mono font-black text-slate-900 dark:text-white">
-                    $0.08
-                  </span>
-                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium leading-tight">
-                    Next stage
-                  </span>
-                </div>
-
-                <div className="flex flex-col">
-                  <span className="text-base font-mono font-black text-purple-700 dark:text-purple-300">
-                    +$0.30
-                  </span>
-                  <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 leading-tight">
-                    +500% Gain
-                  </span>
-                </div>
-              </div>
-
-              {/* Countdown Timer Block */}
-              <div className="p-4 rounded-2xl bg-white/80 dark:bg-white/5 border border-purple-100 dark:border-white/10 mb-5">
-                <span className="text-[11px] font-medium text-slate-600 dark:text-slate-300 block mb-2">
-                  Ends in
-                </span>
-                <CountdownTimer
-                  initialDays={2}
-                  initialHours={13}
-                  initialMinutes={53}
-                  initialSeconds={58}
-                  theme="light"
-                />
-                <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-300 font-medium mt-3 pt-3 border-t border-slate-200/70 dark:border-white/10">
-                  <span className="text-purple-700 dark:text-purple-300 font-bold">$17M+ raised</span>
-                  <span>19,523 investors</span>
-                </div>
-              </div>
-
-              {/* Join Presale CTA Button */}
-              <Button
-                href="#presale"
-                variant="primary"
-                size="lg"
-                className="w-full rounded-2xl py-3.5 font-bold shadow-xl shadow-purple-600/30 hover:shadow-purple-600/50 border-t border-white/25"
-              >
-                Join Presale
-              </Button>
-            </SpotlightCard>
-          </div>
-
         </div>
       </div>
     </section>

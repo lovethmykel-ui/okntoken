@@ -1,21 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Reveal, StaggerContainer } from "@/components/ui/Reveal";
 import { siteContent } from "@/data/siteContent";
-import {
-  Sparkles,
-  Bot,
-  Zap,
-  Layers,
-  Coins,
-  ShieldCheck,
-  CheckCircle2,
-} from "lucide-react";
+import { Zap, Layers, Coins, Bot, Check } from "lucide-react";
 
 export function Utility() {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -23,103 +11,120 @@ export function Utility() {
   const getPillarIcon = (idx: number) => {
     switch (idx) {
       case 0:
-        return <Zap className="w-5 h-5" />;
+        return <Zap className="w-4 h-4" />;
       case 1:
-        return <Layers className="w-5 h-5" />;
+        return <Layers className="w-4 h-4" />;
       case 2:
-        return <Coins className="w-5 h-5" />;
+        return <Coins className="w-4 h-4" />;
       case 3:
-        return <Bot className="w-5 h-5" />;
       default:
-        return <Sparkles className="w-5 h-5" />;
+        return <Bot className="w-4 h-4" />;
     }
   };
 
-  const activeUtility = siteContent.utility.utilities[activeTab] || siteContent.utility.utilities[0];
+  const activeUtility =
+    siteContent.utility.utilities[activeTab] || siteContent.utility.utilities[0];
 
   return (
-    <section id="utility" className="py-24 bg-[#F8F9FE] dark:bg-[#05060A] border-t border-slate-200/80 dark:border-white/10 relative overflow-hidden scroll-mt-24 transition-colors duration-300">
-      {/* Visual Ambient Glow */}
-      <div className="absolute top-1/2 left-1/3 -translate-y-1/2 w-96 h-96 bg-purple-500/10 dark:bg-purple-600/15 rounded-full blur-3xl pointer-events-none" />
+    <section
+      id="utility"
+      className="pt-4 pb-20 lg:pb-28 bg-white dark:bg-[#06070B] text-[#0F172A] dark:text-white transition-colors duration-300 scroll-mt-24"
+    >
+      <div className="max-w-[1274px] mx-auto px-4">
+        <div className="max-w-[680px] mb-10">
+          <h2 className="text-3xl sm:text-5xl font-normal leading-[1.06] tracking-[-0.045em] text-[#0F172A] dark:text-white mb-4 text-balance">
+            The power behind{" "}
+            <span className="text-[#94A3B8] dark:text-slate-500">
+              every network interaction
+            </span>
+          </h2>
+          <p className="text-sm sm:text-base text-[#64748B] dark:text-slate-400 tracking-[-0.02em] leading-[1.45]">
+            {siteContent.utility.description}
+          </p>
+        </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <Reveal direction="up">
-          <SectionHeading
-            eyebrow={siteContent.utility.eyebrow}
-            title={siteContent.utility.headline}
-            description={siteContent.utility.description}
-            centered
-            className="mb-14"
-          />
-        </Reveal>
-
-        {/* Tab Navigation Pill Bar */}
-        <Reveal direction="up" delay={0.1}>
-          <div className="flex items-center justify-center gap-2 flex-wrap mb-12">
-            {siteContent.utility.utilities.map((item, idx: number) => (
-              <button
-                key={idx}
-                onClick={() => setActiveTab(idx)}
-                className={`flex items-center gap-2 px-5 py-3 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 ${
-                  activeTab === idx
-                    ? "bg-purple-600 text-white shadow-md shadow-purple-600/25 scale-[1.02]"
-                    : "glass-light text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-white/10 hover:border-purple-200 dark:hover:border-white/20 border border-white/80 dark:border-white/10"
-                }`}
-              >
-                {getPillarIcon(idx)}
-                <span>{item.title}</span>
-              </button>
-            ))}
+        <div className="grid grid-cols-1 lg:grid-cols-12 rounded-2xl border border-[#EAE7F4] dark:border-white/10 bg-[#FAF9FF] dark:bg-[#0B0E17] shadow-[0_14px_40px_rgba(124,58,237,0.05),0_2px_10px_rgba(15,23,42,0.03)] dark:shadow-none overflow-hidden">
+          {/* Left 5 Cols: Selector List */}
+          <div className="lg:col-span-5 divide-y divide-[#EAE7F4] dark:divide-white/10 border-b lg:border-b-0 lg:border-r border-[#EAE7F4] dark:border-white/10">
+            {siteContent.utility.utilities.map((item, idx) => {
+              const isActive = activeTab === idx;
+              return (
+                <button
+                  key={item.title}
+                  type="button"
+                  onClick={() => setActiveTab(idx)}
+                  className={`w-full text-left p-6 flex items-center justify-between gap-4 transition-colors cursor-pointer ${
+                    isActive
+                      ? "bg-[#F4F0FF] dark:bg-purple-500/12 text-[#0F172A] dark:text-white"
+                      : "text-[#64748B] dark:text-slate-400 hover:bg-white/60 dark:hover:bg-white/[0.02]"
+                  }`}
+                >
+                  <div className="flex items-center gap-4 min-w-0">
+                    <span
+                      className={`font-mono text-xs font-medium shrink-0 ${
+                        isActive
+                          ? "text-purple-700 dark:text-purple-300"
+                          : "text-[#94A3B8] dark:text-slate-500"
+                      }`}
+                    >
+                      0{idx + 1}
+                    </span>
+                    <span className="text-base font-medium tracking-[-0.03em] truncate">
+                      {item.title}
+                    </span>
+                  </div>
+                  <span
+                    className={`w-8 h-8 rounded-full border flex items-center justify-center shrink-0 ${
+                      isActive
+                        ? "border-purple-300 dark:border-purple-400/40 bg-white dark:bg-[#06070B] text-purple-700 dark:text-purple-300"
+                        : "border-[#E8E8E8] dark:border-white/10 text-[#94A3B8] dark:text-slate-500"
+                    }`}
+                  >
+                    {getPillarIcon(idx)}
+                  </span>
+                </button>
+              );
+            })}
           </div>
-        </Reveal>
 
-        {/* Dynamic Detail Card */}
-        <Reveal direction="up" delay={0.2}>
-          <div className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-12 glass-light border border-white/90 dark:border-white/10 shadow-xl relative overflow-hidden">
+          {/* Right 7 Cols: Detail Panel */}
+          <div className="lg:col-span-7 p-8 sm:p-12 flex flex-col justify-between bg-white dark:bg-[#0B0E17]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.18 }}
+                className="flex flex-col justify-between h-full gap-8"
               >
-                <div className="md:col-span-7 flex flex-col">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs font-bold uppercase tracking-wider mb-4 self-start border border-purple-200 dark:border-purple-500/20">
-                    <Sparkles className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                    <span>Ecosystem Utility Pillar {activeTab + 1}</span>
-                  </div>
+                <div>
+                  <span className="text-xs font-mono uppercase text-purple-600 dark:text-purple-400 block mb-3">
+                    Utility Pillar 0{activeTab + 1}
+                  </span>
 
-                  <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white mb-4">
+                  <h3 className="text-2xl sm:text-3xl font-medium tracking-[-0.04em] text-[#0F172A] dark:text-white mb-4">
                     {activeUtility.title}
                   </h3>
 
-                  <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                  <p className="text-sm sm:text-base text-[#64748B] dark:text-slate-300 leading-[1.5] tracking-[-0.02em] max-w-xl">
                     {activeUtility.desc}
                   </p>
-
-                  <div className="flex items-center gap-3 text-sm font-medium text-slate-700 dark:text-slate-200">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>Native BNB Smart Chain smart contract execution</span>
-                  </div>
                 </div>
 
-                <div className="md:col-span-5 flex flex-col gap-4 p-6 rounded-2xl bg-white/80 dark:bg-white/5 border border-slate-200/80 dark:border-white/10 shadow-inner">
-                  <span className="text-xs font-mono font-bold uppercase text-purple-600 dark:text-purple-400 tracking-wider">
-                    Protocol Utility Status
-                  </span>
-                  <div className="text-2xl sm:text-3xl font-mono font-black text-slate-900 dark:text-white">
-                    Verified On-Chain
+                <div className="pt-6 border-t border-[#E8E8E8] dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs sm:text-sm">
+                  <div className="flex items-center gap-2 text-[#475569] dark:text-slate-300">
+                    <Check className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0" />
+                    <span>Native BNB Smart Chain settlement</span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                    Automated on-chain parameter updates executed across the OKNexus ecosystem on BNB Smart Chain.
-                  </p>
+                  <span className="font-mono text-xs text-purple-700 dark:text-purple-300">
+                    Verified On-Chain
+                  </span>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
