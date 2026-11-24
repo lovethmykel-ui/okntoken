@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ChevronDown, ExternalLink, ShieldCheck } from "lucide-react";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
+import { DEFAULT_TGE_TARGET_ISO } from "@/lib/countdown";
 import { estimatePresaleAllocation } from "@/lib/tokenomicsMath";
 
 const SHIMMER_CELLS = [
@@ -16,7 +17,11 @@ const SHIMMER_CELLS = [
   { col: 0, row: 1, delay: "3.5s" },
 ];
 
-export function Hero() {
+interface HeroProps {
+  tgeCountdown?: React.ReactNode;
+}
+
+export function Hero({ tgeCountdown }: HeroProps) {
   const [showEstimator, setShowEstimator] = useState(false);
   const [payCurrency, setPayCurrency] = useState<"USDT" | "BNB">("USDT");
   const [amountInput, setAmountInput] = useState<string>("500");
@@ -156,9 +161,15 @@ export function Hero() {
               <div className="w-[74%] h-full rounded-full bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-500" />
             </div>
 
-            <div className="mt-3 flex items-center justify-between gap-2 text-[11px] text-[#475569] dark:text-purple-200/80">
-              <span>Stage window ends in</span>
-              <CountdownTimer theme="compact" className="text-xs text-[#0F172A] dark:text-white" />
+            <div className="mt-3.5 pt-3 border-t border-purple-500/12 dark:border-white/10">
+              {tgeCountdown ?? (
+                <CountdownTimer
+                  theme="light"
+                  targetDate={DEFAULT_TGE_TARGET_ISO}
+                  label="TGE Launch Countdown"
+                  sublabel="Ends before $0.30 listing"
+                />
+              )}
             </div>
           </div>
 

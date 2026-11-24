@@ -1,5 +1,7 @@
 import { Navbar } from "@/components/sections/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { CountdownTimer } from "@/components/ui/CountdownTimer";
+import { DEFAULT_TGE_TARGET_ISO } from "@/lib/countdown";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { Features } from "@/components/sections/Features";
 import { ComparisonTable } from "@/components/sections/ComparisonTable";
@@ -20,7 +22,16 @@ export default function HomePage() {
       <Navbar />
 
       <main className="flex-1 w-full flex flex-col">
-        <Hero />
+        <Hero
+          tgeCountdown={
+            <CountdownTimer
+              theme="light"
+              targetDate={DEFAULT_TGE_TARGET_ISO}
+              label="TGE Launch Countdown"
+              sublabel="Stage 1 · $0.05 before $0.30 TGE"
+            />
+          }
+        />
         <TrustStrip />
         <Features />
         <ComparisonTable />
